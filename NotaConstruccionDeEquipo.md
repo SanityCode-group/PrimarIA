@@ -40,7 +40,7 @@ Java
 ### Frameworks
 Spring Boot
 
-### Herrramientas
-IDE: Eclipse  
-Base de Datos: Oracle, SQL Developer
+### Herramientas
+IDE: Visual Studio  
+Base de Datos candidatas: Oracle, SQL Developer
 
