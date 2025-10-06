@@ -35,12 +35,12 @@ Reuniones semanales o quincenales para puesta en común.
 
 ## Construcción de backend
 ### Lenguajes
-Java 17
+Java
 
 ### Frameworks
 Spring Boot
 
 ### Herrramientas
 IDE: Eclipse  
-BBDD: Oracle, SQL Developer
+Base de Datos: Oracle, SQL Developer
 
