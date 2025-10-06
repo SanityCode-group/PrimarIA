@@ -21,7 +21,6 @@ Discord para comunicación.
 
 ## Calendario
 Google Calendar
-<br>Enlace para calendario: https://calendar.google.com/calendar/u/0?cid=Y19jMWZiMmEzZTljNTU0N2JiNGNhMzFiNThmMWIwM2IxMWJiY2RhNGY3YTU0ODliYjkwMmZhNzE0ZDg3MGNlZjQxQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20
 <br>Reuniones semanales o quincenales para puesta en común.
 
 ## Construcción de frontend
