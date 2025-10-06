@@ -30,7 +30,7 @@ Reuniones semanales o quincenales para puesta en común.
 ### Frameworks
 
 
-### Herrramientas
+### Herramientas
 
 
 ## Construcción de backend
