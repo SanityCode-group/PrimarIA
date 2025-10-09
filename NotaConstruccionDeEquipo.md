@@ -4,7 +4,9 @@
 Formar equipo para trabajar en el frontend y backend de una herramienta de gestión para la categorización de pacientes hospitalarios.
 
 ## Miembros equipo frontend (SaniDev)
-
+Lucas Melero Mendiondo
+Ruben Mora LOpez
+Christian Garcia Ruiz
 
 ## Miembros equipo backend (FourCode)
 David Egea Muñoz  
@@ -25,12 +27,15 @@ Google Calendar
 
 ## Construcción de frontend
 ### Lenguajes
-
+HTML
+CSS
+JavaScript (Provisional)
 
 ### Frameworks
-
+BootStrap (Provisional)
 
 ### Herramientas
+IDE: Visual Studio 
 
 
 ## Construcción de backend
