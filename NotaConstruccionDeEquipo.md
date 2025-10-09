@@ -1,51 +1,72 @@
-# Sesión 29/09/2025
+## 🎯 Objetivo
 
-## Objetivo
-Formar equipo para trabajar en el frontend y backend de una herramienta de gestión para la categorización de pacientes hospitalarios.
+Formar un equipo para trabajar en el frontend y backend de una herramienta de gestión orientada a la categorización de pacientes hospitalarios.
 
-## Miembros equipo frontend (SaniDev)
-Lucas Melero Mendiondo  
-Ruben Mora Lopez  
-Christian Garcia Ruiz
+## 👥 Equipos de trabajo
+## 🧩 Frontend – SaniDev
 
-## Miembros equipo backend (FourCode)
-David Egea Muñoz  
-María Carolina García Correas  
-Jose Antonio García Pajares  
-Marina Miguel Zapata  
+Lucas Melero Mendiondo
 
-## Nombre de equipo de trabajo
+Rubén Mora López
+
+Christian García Ruiz
+
+## ⚙️ Backend – FourCode
+
+David Egea Muñoz
+
+María Carolina García Correas
+
+José Antonio García Pajares
+
+Marina Miguel Zapata
+
+## 🧠 Nombre del equipo general
+
 SanityCode
 
-## Forma de trabajo en equipo
-GitHub para trabajo colaborativo.  
-Discord para comunicación.
+## 🤝 Forma de trabajo en equipo
 
-## Calendario
-Google Calendar
-<br>Reuniones semanales o quincenales para puesta en común.
+GitHub → Trabajo colaborativo y control de versiones
 
-## Construcción de frontend
+Discord → Comunicación y coordinación diaria
+
+## 🗓️ Calendario
+
+Google Calendar para planificación
+
+Reuniones semanales o quincenales para puesta en común
+
+## 💻 Construcción del Frontend
+
 ### Lenguajes
-HTML  
-CSS  
-JavaScript (Provisional)
+
+HTML
+
+CSS
+
+JavaScript (provisional)
 
 ### Frameworks
-BootStrap (Provisional)
+
+Bootstrap (provisional)
 
 ### Herramientas
-IDE: Visual Studio 
 
+IDE: Visual Studio
 
-## Construcción de backend
+## 🖥️ Construcción del Backend
+
 ### Lenguajes
+
 Java
 
 ### Frameworks
+
 Spring Boot
 
 ### Herramientas
-IDE: Visual Studio  
-Base de Datos candidatas: Oracle, SQL Developer
 
+IDE: Visual Studio
+
+Bases de datos candidatas: Oracle, SQL Developer
