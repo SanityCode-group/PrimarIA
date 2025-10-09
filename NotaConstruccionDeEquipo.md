@@ -5,7 +5,7 @@ Formar equipo para trabajar en el frontend y backend de una herramienta de gesti
 
 ## Miembros equipo frontend (SaniDev)
 Lucas Melero Mendiondo
-Ruben Mora LOpez
+Ruben Mora Lopez
 Christian Garcia Ruiz
 
 ## Miembros equipo backend (FourCode)
