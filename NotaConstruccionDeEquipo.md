@@ -33,9 +33,10 @@ Discord → Comunicación y coordinación diaria
 
 ## 🗓️ Calendario
 
-Google Calendar para planificación
+ClickUp para planificación
 
-Reuniones semanales o quincenales para puesta en común
+Reuniones semanales o quincenales para puesta en común  
+
 
 ## 💻 Construcción del Frontend
 
