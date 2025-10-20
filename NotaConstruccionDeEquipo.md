@@ -13,13 +13,13 @@ Christian García Ruiz
 
 ## ⚙️ Backend – FourCode
 
-David Egea Muñoz
+David Egea Muñoz (Tester)
 
-María Carolina García Correas
+María Carolina García Correas (Programadora principal)
 
-José Antonio García Pajares
+José Antonio García Pajares (Documentación)
 
-Marina Miguel Zapata
+Marina Miguel Zapata (Base de datos)
 
 ## 🧠 Nombre del equipo general
 
@@ -70,4 +70,4 @@ Spring Boot
 
 IDE: Visual Studio
 
-Bases de datos candidatas: Oracle, SQL Developer
+Bases de datos candidatas: MariaDB
