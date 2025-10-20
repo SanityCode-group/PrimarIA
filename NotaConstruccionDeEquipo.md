@@ -33,7 +33,7 @@ Discord → Comunicación y coordinación diaria
 
 ## 🗓️ Calendario
 
-ClickUp para planificación
+ClickUp para planificación (https://app.clickup.com/90151749910/v/s/90157247263)
 
 Reuniones semanales o quincenales para puesta en común  
 
