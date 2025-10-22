@@ -19,14 +19,15 @@ HelloWorld-alta/
 │   ├── src/main/java/com/formulario/demo/
 │   │   ├── DemoApplication.java
 │   │   ├── controller/
-│   │   │   └── AltaController.java
+│   │   │   └── UsuarioController.java
 │   │   ├── model/
 │   │   │   └── Usuario.java
 │   │   └── util/
 │   │       └── JsonFileHandler.java
 │   └── pom.xml
 │
-├── usuarios.json
+├── data/
+|   └── usuarios.json
 │
 └── frontend/
     ├── index.html
@@ -40,8 +41,8 @@ HelloWorld-alta/
 
 | Método | Endpoint     | Método Java       | Descripción                                                                 |
 |--------|--------------|-------------------|-----------------------------------------------------------------------------|
-| GET    | `/api/user`  | `verUsuarios()`   | Devuelve la lista de usuarios con nombre, usuario y email.                  |
-| POST   | `/api/user`  | `altaUsuario()`   | Crea un nuevo usuario y lo guarda en `usuarios.json`.                       |
+| GET    | `/api/user/mostrar`  | `mostrarUsuarios()`   | Devuelve la lista de usuarios con nombre, usuario y email.                  |
+| POST   | `/api/user/registro`  | `altaUsuario()`   | Crea un nuevo usuario y lo guarda en `usuarios.json`.                       |
 
 ## 🚀 Cómo ejecutar
 
