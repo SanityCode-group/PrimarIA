@@ -75,6 +75,6 @@ IDE: Visual Studio
 Bases de datos candidatas: MariaDB
 
 
-ssh root@sanitycode.riberadeltajo.es -p 11307
+ssh root@sanitycode.riberadeltajo.es -p 11307 (ssh)
 
-ssh root@sanitycode.riberadeltajo.es -p 11306
+ssh root@sanitycode.riberadeltajo.es -p 11306 (http)
