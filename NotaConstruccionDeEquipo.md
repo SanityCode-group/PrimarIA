@@ -74,6 +74,7 @@ IDE: Visual Studio
 
 Bases de datos candidatas: MariaDB
 
+Conexión a la nube
 
 ssh root@sanitycode.riberadeltajo.es -p 11307 (ssh)
 
