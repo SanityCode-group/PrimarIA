@@ -1,4 +1,6 @@
-## 🎯 Objetivo
+## PrimarIA
+
+## 🎯 Objetivo 
 
 Formar un equipo para trabajar en el frontend y backend de una herramienta de gestión orientada a la categorización de pacientes hospitalarios.
 
