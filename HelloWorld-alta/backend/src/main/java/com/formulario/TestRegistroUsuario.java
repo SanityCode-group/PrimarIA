@@ -1,9 +1,9 @@
-package com.formulario.demo;
+package com.formulario;
 
 import java.util.List;
 
-import model.Usuario;
-import util.JsonFileHandler;
+import com.formulario.model.Usuario;
+import com.formulario.util.JsonFileHandler;
 
 public class TestRegistroUsuario {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package util;
+package com.formulario.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,15 +10,15 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import model.Usuario;
+import com.formulario.model.Usuario;
 
 @Service
 public class JsonFileHandler {
 
     private final String FILE_PATH = "usuarios.json";
     private final ObjectMapper OBJECT_MAPPER = new ObjectMapper(); 
-    private final String DATA_FOLDER_PATH = "data";
+    private final String DATA_FOLDER_PATH = System.getProperty("user.dir") + File.separator + "data";
+    //private final String DATA_FOLDER_PATH = "data";
     private final String FULL_PATH = DATA_FOLDER_PATH + File.separator + FILE_PATH;
 
 
@@ -50,6 +50,7 @@ public class JsonFileHandler {
      * @throws IOException
      */
     public void guardarUsuario(Usuario nuevoUsuario) throws StreamWriteException, DatabindException, IOException {
+            
         File fichero = new File(FULL_PATH);
         ArrayList<Usuario> listaUsuarios;
 
@@ -60,11 +61,15 @@ public class JsonFileHandler {
             listaUsuarios = new ArrayList<>();
         }
 
+
         //Añadir nuevo usuario a ArrayList
+        System.out.println("Guardando usuario: " + nuevoUsuario.getUsername());
         listaUsuarios.add(nuevoUsuario);
 
         //Escribir lista actualizada en JSON
         OBJECT_MAPPER.writeValue(fichero, listaUsuarios);
+        System.out.println("Usuario guardado en: " + FULL_PATH);
+
     }
 
     /**

@@ -1,4 +1,4 @@
-package model;
+package com.formulario.model;
 
 /**
  * Clase para representar un usuario con atributos básicos

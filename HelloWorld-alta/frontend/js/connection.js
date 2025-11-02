@@ -4,7 +4,7 @@
 
       const usuario = {
         nombre: document.getElementById("nombre").value,
-        usuario: document.getElementById("usuario").value,
+        usuario: document.getElementById("username").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value
       };
