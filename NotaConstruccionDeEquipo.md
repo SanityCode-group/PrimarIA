@@ -48,7 +48,7 @@ HTML
 
 CSS
 
-JavaScript (provisional)
+JavaScript
 
 ### Herramientas
 
