@@ -50,10 +50,6 @@ CSS
 
 JavaScript (provisional)
 
-### Frameworks
-
-Bootstrap (provisional)
-
 ### Herramientas
 
 IDE: Visual Studio
