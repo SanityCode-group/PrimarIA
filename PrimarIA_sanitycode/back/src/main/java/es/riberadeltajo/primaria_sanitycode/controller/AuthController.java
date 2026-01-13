@@ -30,7 +30,7 @@ public class AuthController {
     public String user(){
 
         //Cuando el frontend pasen los modelos y se elija uno se adaptara este contenido para pasar el documento y los datos requeridos
-        return "<!DOCTYPE html> <html> <head> <title>Inicio</title> </head> <body> <a href='/api/auth/success'>Pulsar para ir a iniciar sesion en Google</a> </body> </html>";
+        return "<!DOCTYPE html> <html> <head> <title>Inicio</title> </head> <body> <button onclick='loginGoogle()'>Login con Google</button> <script> function loginGoogle() {const width = 500;  const height = 600; const left = (window.screen.width / 2) - (width / 2); const top = (window.screen.height / 2) - (height / 2); window.open( '/oauth2/authorization/google', 'GoogleLogin', `width=${width},height=${height},top=${top},left=${left}` );} </script> <script> window.addEventListener('message', function(event) { if (event.data === 'login-success') { window.location.replace('/api/auth/success') }}); </script> </body> </html>";
 
     }
 

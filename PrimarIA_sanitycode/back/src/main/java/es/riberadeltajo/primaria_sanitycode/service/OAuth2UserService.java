@@ -19,9 +19,6 @@ public class OAuth2UserService {
 
         if (principal != null){
 
-            //Imprime por consola algunos de los datos mas importantes del usuario que inicio sesion
-            System.out.println("Datos( Nombre:"  + principal.getAttribute("name") + ", Email:"  + principal.getAttribute("email") + ", Sub:"  + principal.getAttribute("sub") + ", Fecha:"  + principal.getAttribute("exp") + ", Hd:"  + principal.getAttribute("hd") + " )");
-
             String nombre = principal.getAttribute("name");
             String email = principal.getAttribute("email");
 
@@ -29,7 +26,7 @@ public class OAuth2UserService {
             json(principal);
 
             //Los returns estos con la estructura html se pueden quitar encuanto se tenga el modelo de frontend
-            return "<!DOCTYPE html> <html> <head><title>Bienvenido</title></head> <body> <h1>" + nombre + "!</h1> <p>Email: " + email + "</p> <a href='/logout'>Cerrar sesion</a> </body> </html>";
+            return "<!DOCTYPE html> <html> <head><title>Bienvenido</title></head> <body> <script> if (window.opener) { window.opener.postMessage('login-success', window.location.origin); } window.close(); </script> <h1>" + nombre + "!</h1> <p>Email: " + email + "</p> <a href='/logout'>Cerrar sesion</a> </body> </html>";
 
         }
 
@@ -42,6 +39,7 @@ public class OAuth2UserService {
 
         try {
 
+            //Si es neceario crea la carpeta para guardar los registros
             File d = new File(new File("data") + File.separator + new File(user.getAttribute("name").toString().replace(" ","")));
 
             if (!d.exists()){
@@ -50,11 +48,20 @@ public class OAuth2UserService {
 
             }
 
+            //Crea un json con todos los datos del usuario por cada registro
+            //Cada registro tendra de nombre "{identificador unico de google}({Hora y fecha local}).json"
             File f = new File( d, user.getAttribute("sub").toString() + "(" + user.getAttribute("exp").toString().replace(":","-") + ")" + ".json");
 
-            Map<String,Object> userData = user.getAttributes();
+            if(!f.exists()){
 
-            objectMapper.writeValue(f,userData);
+                //Imprime por consola algunos de los datos mas importantes del usuario que inicio sesion
+                System.out.println("Datos( Nombre:"  + user.getAttribute("name") + ", Email:"  + user.getAttribute("email") + ", Sub:"  + user.getAttribute("sub") + ", Fecha:"  + user.getAttribute("exp") + ", Hd:"  + user.getAttribute("hd") + " )");
+
+                Map<String,Object> userData = user.getAttributes();
+
+                objectMapper.writeValue(f,userData);
+
+            }
 
         } catch (Exception e) {
 
