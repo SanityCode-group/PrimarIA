@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimarIA</title>
+
+    <link rel="stylesheet" href="./css/chat.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header>
+      <h1>PrimarIA</h1>
+      <nav>
+        <a href="./chat.html">Chat</a>
+        <a href="./perfilmedico.html">Perfil Médico</a>
+        <a href="./login.html">Cerrar sesión</a>
+      </nav>
+    </header>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside>
+      <button class="new-chat" onclick="nuevoChat()">+ Nuevo Chat</button>
+      <section id="historial"></section>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+      <!-- ===== CASOS CLÍNICOS ===== -->
+      <section class="casos-clinicos">
+        <div class="case-box">
+          <h2>Información del Paciente</h2>
+          <p><strong>Nombre:</strong> Alicia García López</p>
+          <p><strong>Edad:</strong> 45 años</p>
+          <p><strong>Género:</strong> Femenino</p>
+          <p><strong>Número de Historia:</strong> 2024-00123</p>
+          <p><strong>Fecha de ingreso:</strong> 14/01/2026</p>
+        </div>
+
+        <div class="case-box">
+          <h2>Descripción del Caso Clínico</h2>
+          <p>
+            Paciente acude a urgencias presentando dolor abdominal agudo en
+            cuadrante inferior derecho con una evolución de 12 horas.
+          </p>
+        </div>
+
+        <div class="case-box">
+          <h2>Antecedentes Médicos</h2>
+          <p><strong>Alergias:</strong> Penicilina</p>
+          <p><strong>Enfermedades previas:</strong> Hipertensión arterial</p>
+          <p><strong>Cirugías:</strong> Apendicectomía (2010)</p>
+          <p><strong>Medicación:</strong> Enalapril 10mg/día</p>
+        </div>
+
+        <div class="case-box">
+          <h2>Plan de Tratamiento</h2>
+          <p><strong>Pruebas:</strong> Analítica, ecografía abdominal</p>
+          <p><strong>Tratamiento:</strong> Analgesia, hidratación IV</p>
+        </div>
+      </section>
+
+      <!-- ===== CHAT ===== -->
+      <section class="chat-container">
+        <div id="area-chat"></div>
+
+        <form>
+          <label for="criterios"
+            >Criterios de evaluación del caso clínico:</label>
+          <div class="radio-group">
+            <span class="radio-label">Precisión diagnóstica</span>
+
+            <div class="radio-items">
+              <label class="radio-item">
+              <input type="radio" name="precision" value="1" /> 1
+            </label>
+
+            <label class="radio-item">
+              <input type="radio" name="precision" value="2" /> 2
+            </label>
+
+            <label class="radio-item">
+              <input type="radio" name="precision" value="3" /> 3
+            </label>
+
+            <label class="radio-item">
+              <input type="radio" name="precision" value="4" /> 4
+            </label>
+
+            <label class="radio-item">
+              <input type="radio" name="precision" value="5" /> 5
+            </label>
+            </div>
+            
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Claridad textual</span>
+            <div class="radio-items">
+              <label class="radio-item">
+                <input type="radio" name="claridad" value="1" /> 1
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="claridad" value="2" /> 2
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="claridad" value="3" /> 3
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="claridad" value="4" /> 4
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="claridad" value="5" /> 5
+              </label>
+            </div>
+          </div>
+          <div class="radio-group">
+            <span class="radio-label">Relevancia clínica</span>
+            <div class="radio-items">
+              <label class="radio-item">
+                <input type="radio" name="relevancia" value="1" /> 1
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="relevancia" value="2" /> 2
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="relevancia" value="3" /> 3
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="relevancia" value="4" /> 4
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="relevancia" value="5" /> 5
+              </label>
+            </div>
+          </div>
+          <div class="radio-group">
+            <span class="radio-label">Adecuación contextual</span>
+            <div class="radio-items">
+              <label class="radio-item">
+                <input type="radio" name="adecuacion" value="1" /> 1
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="adecuacion" value="2" /> 2
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="adecuacion" value="3" /> 3
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="adecuacion" value="4" /> 4
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="adecuacion" value="5" /> 5
+              </label>
+            </div>
+          </div>
+          <div class="radio-group">
+            <span class="radio-label">Nivel técnico adecuado</span>
+            <div class="radio-items">
+              <label class="radio-item">
+                <input type="radio" name="nivel-tecnico" value="1" /> 1
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="nivel-tecnico" value="2" /> 2
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="nivel-tecnico" value="3" /> 3
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="nivel-tecnico" value="4" /> 4
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="nivel-tecnico" value="5" /> 5
+              </label>
+            </div>
+          </div>
+        </form>
+
+        <button id="btn-validar" class="btn-validar">
+          ✔ Validar caso clínico
+        </button>
+
+        <div class="input-area">
+          <textarea
+            id="input-texto"
+            placeholder="Escribe tu Comentario..."
+          ></textarea>
+          <button id="btn-enviar">Enviar</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
