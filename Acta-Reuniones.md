@@ -1,12 +1,5 @@
 # 🧾 Acta de Sesión 20/10/2025
 ### Asistentes
-Lucas Melero Mendiondo  
-Rubén Mora López  
-Christian García Ruiz  
-David Egea Muñoz  
-María Carolina García Correas  
-José Antonio García Pajares  
-Marina Miguel Zapata  
 
 | Nombre                             | Asistencia |
 |------------------------------------|------------|
