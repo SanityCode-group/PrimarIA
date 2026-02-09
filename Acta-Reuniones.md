@@ -272,22 +272,23 @@ aaa
 
 | Nombre                             | Asistencia |
 |------------------------------------|------------|
-| Lucas Melero Mendiondo             | ✔️  ❌       |
-| Rubén Mora López                   | ✔️  ❌       |
-| Christian García Ruiz              | ✔️  ❌       |
-| David Egea Muñoz                   | ✔️  ❌       |
-| María Carolina García Correas      | ✔️  ❌       |
-| José Antonio García Pajares        | ✔️  ❌       |
-| Marina Miguel Zapata               | ✔️  ❌       |
+| Lucas Melero Mendiondo             | ✔️         |
+| Rubén Mora López                   | ❌         |
+| Christian García Ruiz              |  ✔️        |
+| David Egea Muñoz                   | ✔️         |
+| María Carolina García Correas      | ✔️         |
+| José Antonio García Pajares        | ✔️         |
+| Marina Miguel Zapata               |   ❌       |
 
 
 ### Objetivos
-
-aaa
+Crear un algoritmo el cual devuela el caso clinico elegido de los 100 o 200 seleccionados para realizar las valoraciones
 
 ### Temas tratados / Orden del día
 
-aaa
+Definificion de algoritmo de los casos para mostrar
+Comprobacion del diseño de frontend
+Revision de documentacion
 
 ### Desarrollo de la sesión
 
@@ -302,12 +303,15 @@ aaa
 aaa
 
 ### Tareas pendientes de la sesión anterior
-
-aaa
+Un medico tiene que recibir 3 casos pseudo-aleatorios generados por 3 ias diferentes sobre una misma temática (que surja de la misma bibliografia).
 
 ### Tareas pendientes
-
-aaa
+Como mostrar caso clinico mediante un algoritmo con las sguientes cualdades
+- que no se le haya mostrado ya
+- aleatorio dirigido.  aleatorio sobre un conjunto reducido de casos (no coger los miles de casos que hay) (100 o 200).
+- de esos, controlar que al menos 2 medicos pasen por cada caso. maximo 3 medicos
+- 20 medicos evaluan.
+- varias ias generando casos sinteticos. De un pedazo de bibliografia, se generen al menos 3 casos sinteticos. Quiero saber también de qué IA me fio más (de los casos sintéticos que genera). RECAMARA - NO SEGURO.
 
 
 ---------------------------------------------------
