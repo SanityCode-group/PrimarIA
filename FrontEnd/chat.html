@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimarIA - ChatBot</title>
+
+  <link rel="stylesheet" href="./css/chat.css">
+  <link rel="stylesheet" href="./css/header.css">
+</head>
+<body>
+
+<header>
+  <h1>PrimarIA</h1>
+  <nav>
+    <a href="./casosclinico.html">Casos clínicos</a>
+    <a href="./chat.html">ChatBot</a>
+    <a href="./login.html">Cerrar sesión</a>
+  </nav>
+</header>
+
+<div class="chat-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <button class="new-chat" onclick="nuevoChat()">+ Nuevo Chat</button>
+    <section id="historial"></section>
+  </aside>
+
+  <!-- ===== CHAT ===== -->
+  <main class="chat-main">
+    <div id="area-chat" class="chat-messages"></div>
+
+    <div class="chat-input">
+      <textarea
+        id="input-texto"
+        placeholder="Escribe tu mensaje..."
+      ></textarea>
+      <button id="btn-enviar">Enviar</button>
+    </div>
+  </main>
+
+</div>
+
+<script src="./js/script.js"></script>
+</body>
+</html>
