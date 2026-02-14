@@ -1,38 +1,17 @@
 <h1>🩺 PrimarIA</h1>
 
 <p>
+
   <!-- Estado -->
-  <div style="
-    display:inline-flex;
-    align-items:center;
-    padding:2px 10px;
-    border:1px solid #000;
-    border-radius:4px;
-    background:#fff;
-    color:#000;
-    font-size:13px;
-  ">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-         width="16" style="margin-right:6px;">
-    Estado: <strong style="margin-left:4px;">En desarrollo</strong>
-  </div>
+  <img src="https://img.shields.io/badge/Estado-ffffff?style=flat-square&logo=github&logoColor=000&labelColor=ffffff">
+  <img src="https://img.shields.io/badge/En%20Desarrollo-fff4b3?style=flat-square">
+
   <!-- Versión -->
-  <div style="
-    display:inline-flex;
-    align-items:center;
-    padding:2px 10px;
-    border:1px solid #000;
-    border-radius:4px;
-    background:#fff;
-    color:#000;
-    font-size:13px;
-    margin-left:6px;
-  ">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
-         width="16" style="margin-right:6px;">
-    Versión: <strong style="margin-left:4px;">0.1</strong>
-  </div>
+  <img src="https://img.shields.io/badge/Versión-ffffff?style=flat-square&logo=git&logoColor=000&labelColor=ffffff">
+  <img src="https://img.shields.io/badge/0.1-d6eaff?style=flat-square">
+
 </p>
+
 
 <p>
 
