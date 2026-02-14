@@ -1,4 +1,57 @@
-# 🩺 PrimarIA
+<h1>🩺 PrimarIA</h1>
+
+<p>
+  <!-- Estado -->
+  <div style="
+    display:inline-flex;
+    align-items:center;
+    padding:2px 10px;
+    border:1px solid #000;
+    border-radius:4px;
+    background:#fff;
+    color:#000;
+    font-size:13px;
+  ">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+         width="16" style="margin-right:6px;">
+    Estado: <strong style="margin-left:4px;">En desarrollo</strong>
+  </div>
+  <!-- Versión -->
+  <div style="
+    display:inline-flex;
+    align-items:center;
+    padding:2px 10px;
+    border:1px solid #000;
+    border-radius:4px;
+    background:#fff;
+    color:#000;
+    font-size:13px;
+    margin-left:6px;
+  ">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+         width="16" style="margin-right:6px;">
+    Versión: <strong style="margin-left:4px;">0.1</strong>
+  </div>
+</p>
+
+<p>
+
+  <!-- Lenguaje backend -->
+  <img height="25" src="https://img.shields.io/badge/Java-17-red?style=for-the-badge&logo=openjdk"> 
+  <!-- Framework backend -->
+  <img height="25" src="https://img.shields.io/badge/Spring%20Boot-4.0.1-green?style=for-the-badge&logo=springboot">
+  <!-- Frontend -->
+  <img height="25" src="https://img.shields.io/badge/HTML-5-orange?style=for-the-badge&logo=html5">
+  <img height="25" src="https://img.shields.io/badge/CSS-3-blue?style=for-the-badge&logo=css3">
+  <img height="25" src="https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript">
+  <!-- Base de datos -->
+  <img height="25" src="https://img.shields.io/badge/MySQL-8-blue?style=for-the-badge&logo=mysql">
+
+</p>
+
+
+
+
 
 ## 📝 Descripción
 PrimarIA es una aplicación web diseñada para la gestión de casos clínicos en un entorno sanitario. Combina un backend desarrollado en Spring Boot con un frontend basado en HTML, CSS y JavaScript para proporcionar una interfaz intuitiva y funcional.
