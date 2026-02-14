@@ -24,7 +24,7 @@
   <img height="25" src="https://img.shields.io/badge/CSS-3-blue?style=for-the-badge&logo=css3">
   <img height="25" src="https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript">
   <!-- Base de datos -->
-  <img height="25" src="https://img.shields.io/badge/MySQL-8-blue?style=for-the-badge&logo=mysql">
+  <img height="25" src="https://img.shields.io/badge/MariaDB-X-blue?style=for-the-badge&logo=mysql">
 
 </p>
 
@@ -86,11 +86,76 @@ PrimarIA es una aplicación web diseñada para la gestión de casos clínicos en
 - **Chat**: Utiliza la interfaz de chat para comunicaciones.
 
 ## 🗂️ Estructura del Proyecto
-- `backend/`: Código fuente del backend (Spring Boot).
-- `frontend/`: Archivos estáticos del frontend (HTML, CSS, JS).
-- `BBDDprimarIA_pruebas.sql`: Script SQL para pruebas de base de datos.
-- `Acta-Reuniones.md`: Actas de reuniones del equipo.
-- `NotaConstruccionDeEquipo.md`: Notas sobre la construcción del equipo.
+
+```
+PrimarIA/
+├── README.md                          # Este archivo
+├── Acta-Reuniones.md                  # Actas de reuniones del equipo
+├── NotaConstruccionDeEquipo.md        # Notas sobre construcción del equipo
+├── BBDDprimarIA_pruebas.sql           # Script SQL para pruebas de base de datos
+│
+├── backend/                           # 🔧 Backend (Spring Boot)
+│   ├── mvnw                           # Maven Wrapper (Linux/Mac)
+│   ├── mvnw.cmd                       # Maven Wrapper (Windows)
+│   ├── pom.xml                        # Configuración de dependencias Maven
+│   │
+│   └── src/
+│       ├── main/
+│       │   ├── java/
+│       │   │   └── es/riberadeltajo/primaria_sanitycode/
+│       │   │       ├── PrimarIaSanitycodeApplication.java          # Clase principal
+│       │   │       ├── config/
+│       │   │       │   └── SecurityConfig.java                    # Configuración de seguridad
+│       │   │       ├── controller/
+│       │   │       │   └── CasoClinicoController.java             # Endpoints REST
+│       │   │       ├── service/
+│       │   │       │   └── CasoClinicoService.java                # Lógica de negocio
+│       │   │       ├── repository/
+│       │   │       │   ├── CasoClinicoRepository.java             # Acceso a datos
+│       │   │       │   └── CasoClinicoOriginalRepository.java
+│       │   │       └── model/entity/
+│       │   │           ├── CasoClinico.java                       # Entidades JPA
+│       │   │           ├── CasoClinicoOriginal.java
+│       │   │           ├── Usuario.java
+│       │   │           └── Whitelist.java
+│       │   │
+│       │   └── resources/
+│       │       └── application.properties                         # Configuración de la aplicación
+│       │
+│       └── test/
+│           └── java/es/riberadeltajo/primaria_sanitycode/
+│               └── PrimarIaSanitycodeApplicationTests.java         # Tests unitarios
+│
+└── frontend/                          # 🎨 Frontend (HTML5/CSS3/JavaScript)
+    ├── login.html                     # Página de login
+    ├── casosclinico.html              # Página de casos clínicos
+    ├── chat.html                      # Página de chat
+    │
+    ├── css/                           # Estilos
+    │   ├── login.css
+    │   ├── casoclinico.css
+    │   ├── chat.css
+    │   └── header.css
+    │
+    ├── js/                            # Scripts
+    │   └── script.js
+    │
+    └── assets/
+        └── img/                       # Imágenes
+```
+
+### 📊 Descripción de directorios principales
+
+| Directorio | Descripción |
+|-----------|-------------|
+| `backend/` | Código fuente del servidor Spring Boot con arquitectura MVC |
+| `backend/src/main/java/` | Código Java (controllers, servicios, modelos, repositorios) |
+| `backend/src/main/resources/` | Archivos de configuración y propiedades |
+| `backend/src/test/` | Tests unitarios |
+| `frontend/` | Aplicación web estática (HTML, CSS, JavaScript) |
+| `frontend/css/` | Hojas de estilos |
+| `frontend/js/` | Scripts JavaScript |
+| `frontend/assets/` | Recursos multimedia (imágenes, etc.) |
 
 ## 👥 Equipo de desarrollo - SanityCode
 # 🧩 Frontend – SaniDev
