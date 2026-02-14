@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimarIA - Caso Clínico</title>
+
+    <link rel="stylesheet" href="./css/casoclinico.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header>
+      <h1>PrimarIA</h1>
+      <nav>
+        <a href="./casosclinico.html">Casos clínicos</a>
+        <a href="./chat.html">ChatBot</a>
+        <a href="./login.html">Cerrar sesión</a>
+      </nav>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+      <section class="casos-clinicos">
+        <div class="case-box">
+          <h2>Información del Paciente</h2>
+          <p><strong>Nombre:</strong> Alicia García López</p>
+          <p><strong>Edad:</strong> 45 años</p>
+          <p><strong>Género:</strong> Femenino</p>
+          <p><strong>Número de Historia:</strong> 2024-00123</p>
+          <p><strong>Fecha de ingreso:</strong> 14/01/2026</p>
+        </div>
+
+        <div class="case-box">
+          <h2>Descripción del Caso Clínico</h2>
+          <p>
+            Paciente acude a urgencias presentando dolor abdominal agudo en
+            cuadrante inferior derecho con una evolución de 12 horas.
+          </p>
+        </div>
+
+        <div class="case-box">
+          <h2>Antecedentes Médicos</h2>
+          <p><strong>Alergias:</strong> Penicilina</p>
+          <p><strong>Enfermedades previas:</strong> Hipertensión arterial</p>
+          <p><strong>Cirugías:</strong> Apendicectomía (2010)</p>
+          <p><strong>Medicación:</strong> Enalapril 10mg/día</p>
+        </div>
+
+        <div class="case-box">
+          <h2>Plan de Tratamiento</h2>
+          <p><strong>Pruebas:</strong> Analítica, ecografía abdominal</p>
+          <p><strong>Tratamiento:</strong> Analgesia, hidratación IV</p>
+        </div>
+
+        <button onclick="guardarCasoClinico()" class="btn-validar">
+          👉 Abrir caso en ChatBot
+        </button>
+      </section>
+
+      <!-- EVALUACIÓN MÉDICA -->
+      <section class="evaluacion-medica">
+        <form>
+          <label>Criterios de evaluación del caso clínico:</label>
+
+          <div class="radio-group">
+            <span class="radio-label">Precisión diagnóstica</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Claridad textual</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Relevancia clínica</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Adecuación contextual</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Nivel técnico adecuado</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="comentario-medico">
+            <label for="comentario"> Comentario del médico </label>
+            <textarea
+              id="comentario"
+              name="comentario"
+              placeholder="Añade aquí tus observaciones clínicas, sugerencias o comentarios adicionales..."
+            ></textarea>
+          </div>
+        </form>
+
+        <button class="btn-validar">✔ Validar caso clínico</button>
+      </section>
+    </main>
+
+    <script>
+      function guardarCasoClinico() {
+        const caso = {
+          id: "caso_2024_00123",
+          paciente: {
+            nombre: "Alicia García López",
+            edad: 45,
+            genero: "Femenino",
+            historia: "2024-00123",
+            ingreso: "14/01/2026",
+          },
+          descripcion:
+            "Dolor abdominal agudo en cuadrante inferior derecho de 12 horas.",
+          antecedentes: {
+            alergias: "Penicilina",
+            enfermedades: "Hipertensión arterial",
+            cirugias: "Apendicectomía (2010)",
+            medicacion: "Enalapril 10mg/día",
+          },
+          plan: {
+            pruebas: "Analítica, ecografía abdominal",
+            tratamiento: "Analgesia, hidratación IV",
+          },
+        };
+
+        localStorage.setItem("caso_clinico_activo", JSON.stringify(caso));
+
+        window.location.href = "chat.html";
+      }
+    </script>
+  </body>
+</html>
