@@ -1,7 +1,6 @@
 package es.riberadeltajo.primaria_sanitycode;
 
 import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoMuestraRepository;
-import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoOriginalRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +13,7 @@ public class PrimarIaSanitycodeApplication {
         SpringApplication.run(PrimarIaSanitycodeApplication.class, args);
     }
 
-    // PROBANDO MUESTRA DE PRIMER CASO CLÍNICO
-
+    // PROBANDO MUESTRA DE CASO CLÍNICO POR CONSOLA
     @Bean
     public CommandLineRunner mostrarCasoAleatorio(CasoClinicoMuestraRepository repo) {
         return args -> {

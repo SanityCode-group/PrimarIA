@@ -219,52 +219,6 @@ El cliente cambia requisitos: ya no se modificarán los casos clínicos, sólo s
 - Modificar lógica backend para añadir valoraciones y eliminar la modificación de campos del caso clínico.
 
 
-
----------------------------------------------------
-# 🧾 Acta de Sesión 27/01/2026
-
-### Asistentes
-
-| Nombre                             | Asistencia |
-|------------------------------------|------------|
-| Lucas Melero Mendiondo             | ✔️  ❌       |
-| Rubén Mora López                   | ✔️  ❌       |
-| Christian García Ruiz              | ✔️  ❌       |
-| David Egea Muñoz                   | ✔️  ❌       |
-| María Carolina García Correas      | ✔️  ❌       |
-| José Antonio García Pajares        | ✔️  ❌       |
-| Marina Miguel Zapata               | ✔️  ❌       |
-
-
-### Objetivos
-
-aaa
-
-### Temas tratados / Orden del día
-
-aaa
-
-### Desarrollo de la sesión
-
-aaa
-
-### Acuerdos y decisiones tomadas
-
-aaa
-
-### Tareas cumplidas de la sesión anterior
-
-aaa
-
-### Tareas pendientes de la sesión anterior
-
-aaa
-
-### Tareas pendientes
-
-aaa
-
-
 ---------------------------------------------------
 # 🧾 Acta de Sesión 09/02/2026
 
@@ -290,10 +244,9 @@ Definificion de algoritmo de los casos para mostrar
 Comprobacion del diseño de frontend
 Revision de documentacion
 
-### Tareas pendientes de la sesión anterior
+### Tareas pendientes 
 Un medico tiene que recibir 3 casos pseudo-aleatorios generados por 3 ias diferentes sobre una misma temática (que surja de la misma bibliografia).
 
-### Tareas pendientes
 Como mostrar caso clinico mediante un algoritmo con las sguientes cualdades
 - que no se le haya mostrado ya
 - aleatorio dirigido.  aleatorio sobre un conjunto reducido de casos (no coger los miles de casos que hay) (100 o 200).
@@ -301,6 +254,56 @@ Como mostrar caso clinico mediante un algoritmo con las sguientes cualdades
 - 20 medicos evaluan.
 - varias ias generando casos sinteticos. De un pedazo de bibliografia, se generen al menos 3 casos sinteticos. Quiero saber también de qué IA me fio más (de los casos sintéticos que genera). RECAMARA - NO SEGURO.
 
+
+---------------------------------------------------
+# 🧾 Acta de Sesión 15/02/2026
+
+### Asistentes
+
+| Nombre                             | Asistencia |
+|------------------------------------|------------|
+| Lucas Melero Mendiondo             | ✔️  ❌       |
+| Rubén Mora López                   | ✔️  ❌       |
+| Christian García Ruiz              | ✔️  ❌       |
+| David Egea Muñoz                   | ✔️  ❌       |
+| María Carolina García Correas      | ✔️  ❌       |
+| José Antonio García Pajares        | ✔️  ❌       |
+| Marina Miguel Zapata               | ✔️  ❌       |
+
+
+### Objetivos
+
+María C García Correas comunica al resto del equipo avances en el trabajo.
+
+*Canal de comunicación:* WhatsApp
+
+### Orden del día
+
+Tareas realizadas:
+- Modificación del esquema de las tablas de la Base de Datos conforme a criterios.
+- Actualización de dataset en BD.
+- Modificación de entidades Java + Controllers + Services + Repository
+- Crear endpoints.
+- Comunicación frontend con backend.
+- Configuración de CORS globales.
+- Adaptar HTML para mostrar datos dinámicos.
+- Probar integración backend - frontend.
+
+### Tareas cumplidas de la sesión anterior
+- Actualización de BD y entidades.
+- Muestra de caso clínico aleatorio.
+
+### Tareas pendientes
+
+- Revisión de novedades por parte del equipo.
+- Trabajar en algoritmo.
+- Trabajar en despliegue.
+- Trabajar en seguridad de servidor.
+- Trabajar en testing.
+- Revisión de documentación.
+
+
+---------------------------------------------------
 
 ---------------------------------------------------
 # 🧾 Acta de Sesión xx/xx/2026
