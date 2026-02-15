@@ -1,0 +1,5 @@
+python-dotenv
+datasets
+huggingface_hub
+pandas
+mysql-connector-python

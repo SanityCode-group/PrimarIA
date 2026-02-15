@@ -1,6 +1,10 @@
 <h1>🩺 PrimarIA</h1>
 
-<p>
+<p align="center">
+  <img src="./frontend/assets/img/logo-primaria-sanitycode-equipo.svg" width="90">
+</p>
+
+<p align="center">
 
   <!-- Estado -->
   <img src="https://img.shields.io/badge/Estado-ffffff?style=flat-square&logo=github&logoColor=000&labelColor=ffffff">
@@ -13,7 +17,7 @@
 </p>
 
 
-<p>
+<p align="center"> 
 
   <!-- Lenguaje backend -->
   <img height="25" src="https://img.shields.io/badge/Java-17-red?style=for-the-badge&logo=openjdk"> 
@@ -24,7 +28,7 @@
   <img height="25" src="https://img.shields.io/badge/CSS-3-blue?style=for-the-badge&logo=css3">
   <img height="25" src="https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript">
   <!-- Base de datos -->
-  <img height="25" src="https://img.shields.io/badge/MariaDB-X-blue?style=for-the-badge&logo=mysql">
+  <img height="25" src="https://img.shields.io/badge/MariaDB-10.6-blue?style=for-the-badge&logo=mysql">
 
 </p>
 
@@ -158,6 +162,8 @@ PrimarIA/
 | `frontend/assets/` | Recursos multimedia (imágenes, etc.) |
 
 ## 👥 Equipo de desarrollo - SanityCode
+
+
 # 🧩 Frontend – SaniDev
 
 | Nombre                    | Rol        |
@@ -189,3 +195,8 @@ Proyecto realizado para la asignatura de Proyecto Intermodular del CFGS de Desar
 
 ## 📬 Contacto
 Para preguntas o soporte, contacta al equipo de desarrollo.
+
+<br>
+<p align="center">
+  <img src="./frontend/assets/img/logo-primaria-sanitycode-equipo.svg" width="90">
+</p>
