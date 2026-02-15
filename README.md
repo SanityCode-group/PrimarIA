@@ -191,7 +191,7 @@ PrimarIA/
 5. Abre un Pull Request.
 
 ## 📄 Licencia
-Proyecto realizado para la asignatura de Proyecto Intermodular del CFGS de Desarrollo de Aplicaciones Multiplataforma (DAM) en el IES Ribera del Tajo (Talavera de la Reina).
+Proyecto realizado para la asignatura de Proyecto Intermodular del CFGS de Desarrollo de Aplicaciones Multiplataforma (DAM) y Desarrollo de Aplicaciones Web (DAW) en el IES Ribera del Tajo (Talavera de la Reina).
 
 ## 📬 Contacto
 Para preguntas o soporte, contacta al equipo de desarrollo.
