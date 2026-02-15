@@ -54,6 +54,10 @@ Thumbs.db
 
 ### Python / Entorno virtual ###
 venv/
+*/venv/
+dataset/venv/
+
+
 
 ### Archivos generados automáticamente ###
 *.csv
