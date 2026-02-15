@@ -86,6 +86,10 @@ main {
   align-items: flex-start;
 }
 
+p{
+  padding-bottom: 0.9rem;
+}
+
 
 /* ===== CASOS CLÍNICOS ===== */
 .casos-clinicos {

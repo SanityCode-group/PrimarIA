@@ -23,39 +23,100 @@
       <section class="casos-clinicos">
         <div class="case-box">
           <h2>Información del Paciente</h2>
-          <p><strong>Nombre:</strong> Alicia García López</p>
-          <p><strong>Edad:</strong> 45 años</p>
-          <p><strong>Género:</strong> Femenino</p>
-          <p><strong>Número de Historia:</strong> 2024-00123</p>
-          <p><strong>Fecha de ingreso:</strong> 14/01/2026</p>
+          <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+          <p><strong>Edad:</strong> <span id="edad"></span></p>
+          <p><strong>Género:</strong> <span id="sexo"></span></p>
+          <p><strong>Número de Historia:</strong> <span id="numHistoria"></span></p>
+          <p><strong>Fecha de ingreso:</strong> <span id="fechaIngreso"></span></p>
         </div>
 
         <div class="case-box">
           <h2>Descripción del Caso Clínico</h2>
           <p>
-            Paciente acude a urgencias presentando dolor abdominal agudo en
-            cuadrante inferior derecho con una evolución de 12 horas.
+            <span id="descripcionCaso"></span>
           </p>
         </div>
 
         <div class="case-box">
           <h2>Antecedentes Médicos</h2>
-          <p><strong>Alergias:</strong> Penicilina</p>
-          <p><strong>Enfermedades previas:</strong> Hipertensión arterial</p>
-          <p><strong>Cirugías:</strong> Apendicectomía (2010)</p>
-          <p><strong>Medicación:</strong> Enalapril 10mg/día</p>
+          <p><strong>Alergias:</strong> <span id="alergias"></span></p>
+          <p><strong>Enfermedades previas:</strong> <span id="enfermedades"></span></p>
+          <p><strong>Cirugías:</strong> <span id="cirugias"></span></p>
+          <p><strong>Medicación:</strong> <span id="medicacion"></span></p>
         </div>
 
         <div class="case-box">
           <h2>Plan de Tratamiento</h2>
-          <p><strong>Pruebas:</strong> Analítica, ecografía abdominal</p>
-          <p><strong>Tratamiento:</strong> Analgesia, hidratación IV</p>
+          <p><strong>Pruebas:</strong> <span id="pruebas"></span></p>
+          <p><strong>Tratamiento:</strong> <span id="tratamiento"></span></p>
         </div>
 
-        <button onclick="guardarCasoClinico()" class="btn-validar">
+        <!-- <button onclick="guardarCasoClinico()" class="btn-validar">
           👉 Abrir caso en ChatBot
-        </button>
+        </button> -->
       </section>
+
+      <script>
+        // ============================================
+        // 1) Variable global donde guardaremos el caso
+        // ============================================
+        let casoActual = null;
+
+        // ============================================
+        // 2) Función que llama al backend y carga el caso
+        // ============================================
+        async function cargarCasoClinico() {
+          try {
+            // CAMBIO: llamada al endpoint del backend
+            const response = await fetch("http://localhost:8080/api/casos/random");
+
+            // Convertimos la respuesta en JSON
+            const caso = await response.json();
+
+            // Guardamos el caso para usarlo luego (chatbot, validación, etc.)
+            casoActual = caso;
+
+            // ============================================
+            // 3) Pintar los datos en el HTML
+            //    (estos IDs deben existir en tu HTML)
+            // ============================================
+            document.getElementById("nombre").textContent = caso.nombre || "No disponible";
+            document.getElementById("edad").textContent = caso.edad || "No disponible";
+            document.getElementById("sexo").textContent = caso.sexo || "No disponible";
+            document.getElementById("numHistoria").textContent = caso.numeroHistoria || "—";
+            document.getElementById("fechaIngreso").textContent = caso.fechaIngreso || "—";
+
+            document.getElementById("descripcionCaso").textContent = caso.motivo || "—";
+
+            document.getElementById("alergias").textContent = caso.alergias || "—";
+            document.getElementById("enfermedades").textContent = caso.antecedentes_medicos || "—";
+            document.getElementById("cirugias").textContent = caso.antecedentes_quirurgicos || "—";
+            document.getElementById("medicacion").textContent = caso.medicacion_actual || "—";
+
+            document.getElementById("pruebas").textContent = caso.resultados_pruebas || "—";
+            document.getElementById("tratamiento").textContent = caso.tratamiento_farmacologico || "—";
+
+          } catch (error) {
+            console.error("Error cargando caso clínico:", error);
+          }
+        }
+
+        // ============================================
+        // 4) Ejecutar la carga automáticamente al abrir la página
+        // ============================================
+        cargarCasoClinico();
+
+        // ============================================
+        // 5) Función para enviar el caso al ChatBot
+        // ============================================
+        function abrirEnChatbot() {
+          if (casoActual) {
+            localStorage.setItem("caso_clinico_activo", JSON.stringify(casoActual));
+            window.location.href = "chat.html";
+          }
+        }
+      </script>
+
 
       <!-- EVALUACIÓN MÉDICA -->
       <section class="evaluacion-medica">

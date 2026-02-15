@@ -1,9 +1,11 @@
 package es.riberadeltajo.primaria_sanitycode.controller;
 
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoMuestra;
+import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 //import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoMuestraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,8 +23,15 @@ public class CasoClinicoMuestraController {
 
     // Obtener caso clínico original aleatorio
     @GetMapping("/random") //endpoint para obtener un caso clínico aleatorio
-    public CasoClinicoMuestra obtenerCasoClinicoAleatorio() {
-        return casoClinicoMuestraService.obtenerCasoClinicoAleatorio();
+    public ResponseEntity<CasoClinicoOriginal> obtenerCasoClinicoAleatorio() {
+
+        CasoClinicoMuestra muestra = casoClinicoMuestraService.obtenerCasoClinicoAleatorio();
+        
+        if(muestra == null || muestra.getCasoOriginal() == null){
+            return ResponseEntity.notFound().build();
+        }
+        
+        return ResponseEntity.ok(muestra.getCasoOriginal()); //devolver el caso clínico original asociado a la muestra
     }
 
     // Preparar caso para VALIDAR

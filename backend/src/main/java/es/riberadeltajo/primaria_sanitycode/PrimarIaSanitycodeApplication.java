@@ -1,5 +1,6 @@
 package es.riberadeltajo.primaria_sanitycode;
 
+import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoMuestraRepository;
 import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoOriginalRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,23 +14,35 @@ public class PrimarIaSanitycodeApplication {
         SpringApplication.run(PrimarIaSanitycodeApplication.class, args);
     }
 
+    // PROBANDO MUESTRA DE PRIMER CASO CLÍNICO
 
-    //PROBANDO MUESTRA DE PRIMER CASO CLÍNICO
-    /*
     @Bean
-    public CommandLineRunner mostrarPrimerCaso(CasoClinicoOriginalRepository repo) {
+    public CommandLineRunner mostrarCasoAleatorio(CasoClinicoMuestraRepository repo) {
         return args -> {
-            repo.findAll().stream().findFirst().ifPresent(caso -> {
-                System.out.println("\n******************************************************");
-                System.out.println("Primer caso clínico:");
-                System.out.println("ID: " + caso.getId());
-                System.out.println("Edad: " + caso.getEdad());
-                System.out.println("Sexo: " + caso.getSexo());
-                System.out.println("Motivo consulta: " + caso.getMotivo());
-                System.out.println("Diagnóstico final: " + caso.getDiagnostico_final());
-                System.out.println("******************************************************");
-            });
+
+            System.out.println(">>> RUNNER INICIADO <<<");
+
+            long total = repo.count();
+            System.out.println(">>> TOTAL REGISTROS EN MUESTRA: " + total);
+
+            System.out.println(">>> OBTENIENDO CASO ALEATORIO <<<");
+            var caso = repo.findRandomCasoClinico();
+
+            if (caso == null) {
+                System.out.println("⚠ No se encontró ningún caso clínico en la tabla de muestra.");
+                return;
+            }
+
+            System.out.println("\n******************************************************");
+            System.out.println("Caso clínico aleatorio (MUESTRA):");
+            System.out.println("ID: " + caso.getId());
+            System.out.println("Edad: " + caso.getCasoOriginal().getEdad());
+            System.out.println("Sexo: " + caso.getCasoOriginal().getSexo());
+            System.out.println("Motivo consulta: " + caso.getCasoOriginal().getMotivo());
+            System.out.println("Diagnóstico final: " + caso.getCasoOriginal().getDiagnostico_final());
+            System.out.println("******************************************************");
         };
     }
-    */
+
+
 }

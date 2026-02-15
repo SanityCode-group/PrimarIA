@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoOriginalService;
 
+/**
+ * @author María C García Correas
+ * @since 15/2/26
+ */
+
 @RestController
 @RequestMapping("/api/originales")
 @CrossOrigin(origins = "*")
