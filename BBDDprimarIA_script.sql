@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS validaciones (
     relevancia_clinica TINYINT NOT NULL CHECK (relevancia_clinica BETWEEN 1 AND 5),
     adecuacion_contextual TINYINT NOT NULL CHECK (adecuacion_contextual BETWEEN 1 AND 5),
     nivel_tecnico TINYINT NOT NULL CHECK (nivel_tecnico BETWEEN 1 AND 5),
+    -- Campo de texto sin límite de caracteres
+    observaciones LONGTEXT,
     -- Relaciones
     id_usuario BIGINT NOT NULL,
     id_caso_original INT NOT NULL,

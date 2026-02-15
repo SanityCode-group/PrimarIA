@@ -40,11 +40,11 @@
 PrimarIA es una aplicación web diseñada para la gestión de casos clínicos en un entorno sanitario. Combina un backend desarrollado en Spring Boot con un frontend basado en HTML, CSS y JavaScript para proporcionar una interfaz intuitiva y funcional.
 
 ## ✨ Características
-- Gestión de casos clínicos: Leer, validar y puntuar casos clínicos.
-- Autenticación de usuarios: Sistema de login seguro.
-- Interfaz de chat: Comunicación integrada para consultas.
-- Base de datos: Integración con base de datos para almacenamiento persistente.
-- Seguridad: Configuración de seguridad con Spring Security.
+- **Gestión de casos clínicos:** Leer, validar y puntuar casos clínicos.
+- **Autenticación de usuarios:** Sistema de login seguro.
+- **Interfaz de chat:** Comunicación integrada para consultas.
+- **Base de datos:** Integración con base de datos para almacenamiento persistente.
+- **Seguridad:** Configuración de seguridad con Spring Security.
 
 ## 💻 Tecnologías Utilizadas
 - **Backend**: Java 17, Spring Boot, Spring Security, JPA/Hibernate
