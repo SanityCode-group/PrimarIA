@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimarIA - Caso Clínico</title>
+
+    <link rel="stylesheet" href="./css/casoclinico.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header>
+      <h1>PrimarIA</h1>
+      <nav>
+        <a href="./casosclinico.html">Casos clínicos</a>
+        <a href="./login.html">Cerrar sesión</a>
+      </nav>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+      <section class="casos-clinicos">
+        <div class="case-box">
+          <h2>Información del Paciente</h2>
+          <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+          <p><strong>Edad:</strong> <span id="edad"></span></p>
+          <p><strong>Género:</strong> <span id="sexo"></span></p>
+          <p><strong>Número de Historia:</strong> <span id="numHistoria"></span></p>
+          <p><strong>Fecha de ingreso:</strong> <span id="fechaIngreso"></span></p>
+        </div>
+
+        <div class="case-box">
+          <h2>Descripción del Caso Clínico</h2>
+          <p>
+            <span id="descripcionCaso"></span>
+          </p>
+        </div>
+
+        <div class="case-box">
+          <h2>Antecedentes Médicos</h2>
+          <p><strong>Alergias:</strong> <span id="alergias"></span></p>
+          <p><strong>Enfermedades previas:</strong> <span id="enfermedades"></span></p>
+          <p><strong>Cirugías:</strong> <span id="cirugias"></span></p>
+          <p><strong>Medicación:</strong> <span id="medicacion"></span></p>
+        </div>
+
+        <div class="case-box">
+          <h2>Plan de Tratamiento</h2>
+          <p><strong>Pruebas:</strong> <span id="pruebas"></span></p>
+          <p><strong>Tratamiento:</strong> <span id="tratamiento"></span></p>
+        </div>
+
+        <!-- <button onclick="guardarCasoClinico()" class="btn-validar">
+          👉 Abrir caso en ChatBot
+        </button> -->
+      </section>
+
+      <script>
+        // ============================================
+        // 1) Variable global donde guardaremos el caso
+        // ============================================
+        let casoActual = null;
+
+        // ============================================
+        // 2) Función que llama al backend y carga el caso
+        // ============================================
+        async function cargarCasoClinico() {
+          try {
+            // CAMBIO: llamada al endpoint del backend
+            const response = await fetch("http://localhost:8080/api/casos/random");
+
+            // Convertimos la respuesta en JSON
+            const caso = await response.json();
+
+            // Guardamos el caso para usarlo luego (chatbot, validación, etc.)
+            casoActual = caso;
+
+            // ============================================
+            // 3) Pintar los datos en el HTML
+            //    (estos IDs deben existir en tu HTML)
+            // ============================================
+            document.getElementById("nombre").textContent = caso.nombre || "No disponible";
+            document.getElementById("edad").textContent = caso.edad || "No disponible";
+            document.getElementById("sexo").textContent = caso.sexo || "No disponible";
+            document.getElementById("numHistoria").textContent = caso.numeroHistoria || "—";
+            document.getElementById("fechaIngreso").textContent = caso.fechaIngreso || "—";
+
+            document.getElementById("descripcionCaso").textContent = caso.motivo || "—";
+
+            document.getElementById("alergias").textContent = caso.alergias || "—";
+            document.getElementById("enfermedades").textContent = caso.antecedentes_medicos || "—";
+            document.getElementById("cirugias").textContent = caso.antecedentes_quirurgicos || "—";
+            document.getElementById("medicacion").textContent = caso.medicacion_actual || "—";
+
+            document.getElementById("pruebas").textContent = caso.resultados_pruebas || "—";
+            document.getElementById("tratamiento").textContent = caso.tratamiento_farmacologico || "—";
+
+          } catch (error) {
+            console.error("Error cargando caso clínico:", error);
+          }
+        }
+
+        // ============================================
+        // 4) Ejecutar la carga automáticamente al abrir la página
+        // ============================================
+        cargarCasoClinico();
+
+        // ============================================
+        // 5) Función para enviar el caso al ChatBot
+        // ============================================
+        function abrirEnChatbot() {
+          if (casoActual) {
+            localStorage.setItem("caso_clinico_activo", JSON.stringify(casoActual));
+            window.location.href = "chat.html";
+          }
+        }
+      </script>
+
+
+      <!-- EVALUACIÓN MÉDICA -->
+      <section class="evaluacion-medica">
+        <form>
+          <label>Criterios de evaluación del caso clínico:</label>
+
+          <div class="radio-group">
+            <span class="radio-label">Precisión diagnóstica</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="precision" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Claridad textual</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="claridad" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Relevancia clínica</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="relevancia" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Adecuación contextual</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="adecuacion" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-label">Nivel técnico adecuado</span>
+            <div class="radio-items">
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="1" />1</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="2" />2</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="3" />3</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="4" />4</label
+              >
+              <label class="radio-item"
+                ><input type="radio" name="nivel-tecnico" value="5" />5</label
+              >
+            </div>
+          </div>
+
+          <div class="comentario-medico">
+            <label for="comentario"> Comentario del médico </label>
+            <textarea
+              id="comentario"
+              name="comentario"
+              placeholder="Añade aquí tus observaciones clínicas, sugerencias o comentarios adicionales..."
+            ></textarea>
+          </div>
+        </form>
+
+        <button class="btn-validar">✔ Validar caso clínico</button>
+      </section>
+    </main>
+
+    <script>
+      function guardarCasoClinico() {
+        const caso = {
+          id: "caso_2024_00123",
+          paciente: {
+            nombre: "Alicia García López",
+            edad: 45,
+            genero: "Femenino",
+            historia: "2024-00123",
+            ingreso: "14/01/2026",
+          },
+          descripcion:
+            "Dolor abdominal agudo en cuadrante inferior derecho de 12 horas.",
+          antecedentes: {
+            alergias: "Penicilina",
+            enfermedades: "Hipertensión arterial",
+            cirugias: "Apendicectomía (2010)",
+            medicacion: "Enalapril 10mg/día",
+          },
+          plan: {
+            pruebas: "Analítica, ecografía abdominal",
+            tratamiento: "Analgesia, hidratación IV",
+          },
+        };
+
+        localStorage.setItem("caso_clinico_activo", JSON.stringify(caso));
+
+        window.location.href = "chat.html";
+      }
+    </script>
+  </body>
+</html>
