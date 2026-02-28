@@ -1,0 +1,2 @@
+function loginGoogle() {const width = 500;  const height = 600; const left = window.screenX + (window.outerWidth - width) / 2; const top = window.screenY + (window.outerHeight - height) / 2; window.open( '/oauth2/authorization/google', 'GoogleLogin', `width=${width},height=${height},top=${top},left=${left}` );}
+window.addEventListener('message', function(event) { if (event.data === 'login-success' && event.origin === window.location.origin) { window.location.replace('/casosclinico') }});

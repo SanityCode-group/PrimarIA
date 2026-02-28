@@ -1,13 +1,18 @@
 package es.riberadeltajo.primaria_sanitycode.controller;
 
 import es.riberadeltajo.primaria_sanitycode.service.OAuth2UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 @Controller
 public class AuthController {
@@ -16,31 +21,32 @@ public class AuthController {
     @Autowired
     OAuth2UserService oAuth2UserService;
 
-    //Redirige las conexiones de root ("/") a inicio ("/api/auth/user")
+    //Redirige las conexiones de root ("/") a login google ("/login.html")
     @GetMapping("/")
     public RedirectView inicio(){
 
-        return new RedirectView("/api/auth/user");
+        return new RedirectView("/api/auth/login");
 
     }
 
-    //Inicio antes de registrarse en google, pantalla de inicio
-    @GetMapping("/api/auth/user")
-    @ResponseBody //Esta anotacion es hasta que se tenga el frontend
-    public String user(){
+    //Devuelve el login.html mediante thymeleaf
+    @GetMapping("/api/auth/login")
+    public String login(){
 
-        //Cuando el frontend pasen los modelos y se elija uno se adaptara este contenido para pasar el documento y los datos requeridos
-        return "<!DOCTYPE html> <html> <head> <title>Inicio</title> </head> <body> <button onclick='loginGoogle()'>Login con Google</button> <script> function loginGoogle() {const width = 500;  const height = 600; const left = (window.screen.width / 2) - (width / 2); const top = (window.screen.height / 2) - (height / 2); window.open( '/oauth2/authorization/google', 'GoogleLogin', `width=${width},height=${height},top=${top},left=${left}` );} </script> <script> window.addEventListener('message', function(event) { if (event.data === 'login-success') { window.location.replace('/api/auth/success') }}); </script> </body> </html>";
+        return "login";
 
     }
 
-    //Tras el login correcto, te lleva aqui, donde genera un html basico con el nombre y correo del que inicio sesion, ademas de poder hacer logout
+    //Tras el login correcto, te lleva aqui, donde se procesa el inicio
+    //Manda un javascript mandando una señal a la ventana original de que el login fue correcto y cierra la ventana de google
     @GetMapping("/api/auth/success")
-    @ResponseBody//Esta anotacion es hasta que se tenga el frontend
-    public String success(@AuthenticationPrincipal OAuth2User principal){
+    public void success(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) throws IOException {
 
-        //Cuando el frontend pasen los modelos y se elija uno se adaptara este contenido para pasar el documento y los datos requeridos
-        return oAuth2UserService.inicio(principal);
+        response.setContentType("text/html;charset=UTF-8");
+
+        response.getWriter().write(oAuth2UserService.respuesta(principal));
+
+        response.getWriter().flush();
 
     }
 

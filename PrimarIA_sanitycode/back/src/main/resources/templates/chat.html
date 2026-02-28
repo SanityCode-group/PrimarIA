@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimarIA - ChatBot</title>
+
+  <link rel="stylesheet" href="./css/chat.css">
+  <link rel="stylesheet" href="./css/header.css">
+</head>
+<body>
+
+<header>
+  <h1>PrimarIA</h1>
+  <nav>
+    <a href="./casosclinico">Casos clínicos</a>
+    <a href="./chat">ChatBot</a>
+
+      <!-- Consulta el csrf y envia su token al hacer logout para evitar por defecto en pantalla de confirmacion-->
+      <form id="logoutForm" action="/logout" method="post" style="display:none;">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      </form>
+      <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Cerrar sesión</a>
+  </nav>
+</header>
+
+<div class="chat-layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <button class="new-chat" onclick="nuevoChat()">+ Nuevo Chat</button>
+    <section id="historial"></section>
+  </aside>
+
+  <!-- ===== CHAT ===== -->
+  <main class="chat-main">
+    <div id="area-chat" class="chat-messages"></div>
+
+    <div class="chat-input">
+      <textarea
+        id="input-texto"
+        placeholder="Escribe tu mensaje..."
+      ></textarea>
+      <button id="btn-enviar">Enviar</button>
+    </div>
+  </main>
+
+</div>
+
+<script src="./js/script.js"></script>
+</body>
+</html>
