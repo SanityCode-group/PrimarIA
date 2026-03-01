@@ -303,9 +303,146 @@ Tareas realizadas:
 - Revisión de documentación.
 
 
----------------------------------------------------
 
 ---------------------------------------------------
+# 🧾 Acta de Sesión xx/xx/2026
+
+### Asistentes
+
+| Nombre                             | Asistencia |
+|------------------------------------|------------|
+| Lucas Melero Mendiondo             | ✔️  ❌       |
+| Rubén Mora López                   | ✔️  ❌       |
+| Christian García Ruiz              | ✔️  ❌       |
+| David Egea Muñoz                   | ✔️  ❌       |
+| María Carolina García Correas      | ✔️  ❌       |
+| José Antonio García Pajares        | ✔️  ❌       |
+| Marina Miguel Zapata               | ✔️  ❌       |
+
+
+### Objetivos
+
+aaa
+
+### Temas tratados / Orden del día
+
+aaa
+
+### Desarrollo de la sesión
+
+aaa
+
+### Acuerdos y decisiones tomadas
+
+aaa
+
+### Tareas cumplidas de la sesión anterior
+
+aaa
+
+### Tareas pendientes de la sesión anterior
+
+aaa
+
+### Tareas pendientes
+
+aaa
+
+
+---------------------------------------------------
+
+# 🧾 Acta de Sesión xx/xx/2026
+
+### Asistentes
+
+| Nombre                             | Asistencia |
+|------------------------------------|------------|
+| Lucas Melero Mendiondo             | ✔️  ❌       |
+| Rubén Mora López                   | ✔️  ❌       |
+| Christian García Ruiz              | ✔️  ❌       |
+| David Egea Muñoz                   | ✔️  ❌       |
+| María Carolina García Correas      | ✔️  ❌       |
+| José Antonio García Pajares        | ✔️  ❌       |
+| Marina Miguel Zapata               | ✔️  ❌       |
+
+
+### Objetivos
+
+aaa
+
+### Temas tratados / Orden del día
+
+aaa
+
+### Desarrollo de la sesión
+
+aaa
+
+### Acuerdos y decisiones tomadas
+
+aaa
+
+### Tareas cumplidas de la sesión anterior
+
+aaa
+
+### Tareas pendientes de la sesión anterior
+
+aaa
+
+### Tareas pendientes
+
+aaa
+
+
+---------------------------------------------------
+
+# 🧾 Acta de Sesión xx/xx/2026
+
+### Asistentes
+
+| Nombre                             | Asistencia |
+|------------------------------------|------------|
+| Lucas Melero Mendiondo             | ✔️  ❌       |
+| Rubén Mora López                   | ✔️  ❌       |
+| Christian García Ruiz              | ✔️  ❌       |
+| David Egea Muñoz                   | ✔️  ❌       |
+| María Carolina García Correas      | ✔️  ❌       |
+| José Antonio García Pajares        | ✔️  ❌       |
+| Marina Miguel Zapata               | ✔️  ❌       |
+
+
+### Objetivos
+
+aaa
+
+### Temas tratados / Orden del día
+
+aaa
+
+### Desarrollo de la sesión
+
+aaa
+
+### Acuerdos y decisiones tomadas
+
+aaa
+
+### Tareas cumplidas de la sesión anterior
+
+aaa
+
+### Tareas pendientes de la sesión anterior
+
+aaa
+
+### Tareas pendientes
+
+aaa
+
+
+---------------------------------------------------
+
 # 🧾 Acta de Sesión xx/xx/2026
 
 ### Asistentes

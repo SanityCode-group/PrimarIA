@@ -78,7 +78,7 @@ aside {
 /* ===== MAIN ===== */
 main {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   padding: 2rem;
   margin: 0 auto;
   display: flex;
@@ -93,7 +93,7 @@ p{
 
 /* ===== CASOS CLÍNICOS ===== */
 .casos-clinicos {
-  width: 100%;
+  width: 80%;
   max-width: 900px;
   display: grid;
   grid-template-columns: 1fr;
@@ -259,10 +259,11 @@ form {
 }
 
 label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
+      display: block;
+    font-weight: 600;
+    font-size: 1.25em;
+    margin-bottom: 8px;
+    color: #333;
 }
 
 select {
@@ -298,7 +299,6 @@ option {
 }
 
 .radio-label {
-  font-weight: 600;
   margin-right: 10px;
 }
 
@@ -314,7 +314,7 @@ option {
 }
 
 .evaluacion-medica {
-  width: 420px;
+  width: 700px;
   background: var(--white);
   padding: 20px;
   border-radius: 12px;
@@ -332,6 +332,7 @@ option {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 50px;
 }
 
 .comentario-medico label {
