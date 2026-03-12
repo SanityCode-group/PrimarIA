@@ -25,6 +25,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // >>>> MODO DESARROLLO: todo permitido <<<<
+        /* En modo desarrollo, se permite el acceso a todas las rutas sin autenticación, 
+         * y se habilita CORS para permitir peticiones desde el frontend en localhost. 
+         * Además, se deshabilita CSRF para facilitar las pruebas con herramientas como 
+         * Postman o el frontend sin necesidad de gestionar tokens CSRF.
+         *  
+         */
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable());
         if (devMode) {
             http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());

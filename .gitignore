@@ -48,9 +48,9 @@ Thumbs.db
 ### Java ###
 *.class
 
-### Variables de entorno ###
+### Variables de entorno y claves ###
 .env
-
+application-secret.yml
 
 ### Python / Entorno virtual ###
 venv/
