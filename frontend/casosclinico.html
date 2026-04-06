@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimarIA - Caso Clínico</title>
 
-    <script src="./js/config.js"></script> <!-- Cargar configuración (URL backend, etc.) -->
-
+    <script src="./js/config.js"></script>
     <link rel="stylesheet" href="./css/casoclinico.css" />
   </head>
   <body>
     <!-- ===== HEADER ===== -->
-    <header>
-      <h1>PrimarIA</h1>
-      <nav>
-        <a href="./casosclinico.html">Casos clínicos</a>
-        <a href="./login.html">Cerrar sesión</a>
-      </nav>
-    </header>
+    <app-header></app-header>
+    
 
     <!-- ===== MAIN ===== -->
     <main>
@@ -83,126 +77,6 @@
 
       </section>
 
-
-      <script>
-        // ============================================
-        // 1) Variable global donde guardaremos el caso
-        // ============================================
-        let casoActual = null;
-
-        // ============================================
-        // 2) Función que llama al backend y carga el caso
-        // ============================================
-        function pintar(id, valor){
-          const elemento = document.getElementById(id);
-          if(elemento){
-            elemento.textContent = valor || "—";
-          }
-        }
-        
-        async function cargarCasoClinico() {
-          try {
-            // CAMBIO: llamada al endpoint del backend con credenciales para enviar la cookie de sesión
-            // const response = await fetch("http://localhost:8080/api/casos/random", {
-            //   credentials: "include"
-            // });
-            const response = await fetch(`${ENV.API_BASE}/api/casos/random`, {
-              credentials: "include"
-            });
-
-            if (response.status === 401) {
-              if (ENV.requiresAuth) {
-                console.warn("No autenticado. Redirigiendo a Google...");
-                window.location.href = `${ENV.API_BASE.replace("/api", "")}/oauth2/authorization/google`;
-              } else {
-                console.warn("401 en modo dev — ¿está activo dev-mode en el backend?");
-              }
-              return;
-            }
-
-            if (!response.ok) {
-              throw new Error(`Error en la respuesta: ${response.status}`);
-            }
-
-            // // Si la respuesta no es 200 OK, algo va mal (probablemente sesión expirada)
-            // if (!response.ok) {
-            //   if (response.status === 401 || response.status === 403) {
-            //     console.warn("No autenticado. Redirigiendo a login...");
-            //     window.location.href = "login.html"; // O la URL de tu login
-            //     return;
-            //   }
-            //   throw new Error(`Error del servidor: ${response.status}`);
-            // }
-
-            // Convertimos la respuesta en JSON
-            const caso = await response.json();
-
-            // Guardamos el caso para usarlo luego (chatbot, validación, etc.)
-            casoActual = caso;
-
-            // ============================================
-            // 3) Pintar los datos en el HTML
-            //    (estos IDs deben existir en tu HTML)
-            // ============================================
-            // 🩺 Datos del Paciente
-            pintar("edad", caso.edad);
-            pintar("sexo", caso.sexo);
-            pintar("alergias", caso.alergias);
-            pintar("factores_sociales", caso.factores_sociales);
-
-            // 📚 Antecedentes
-            pintar("antecedentes_medicos", caso.antecedentes_medicos);
-            pintar("antecedentes_quirurgicos", caso.antecedentes_quirurgicos);
-            pintar("antecedentes_familiares", caso.antecedentes_familiares);
-
-            // 🧬 Situación Clínica
-            pintar("habitos", caso.habitos);
-            pintar("situacion_basal", caso.situacion_basal);
-            pintar("medicacion_actual", caso.medicacion_actual);
-            pintar("motivo", caso.motivo);
-            pintar("sintomas", caso.sintomas);
-
-            // 🔍 Exploración y Pruebas
-            pintar("exploracion_general", caso.exploracion_general);
-            pintar("signos", caso.signos);
-            pintar("resultados_pruebas", caso.resultados_pruebas);
-
-            // 🧠 Juicio Clínico
-            pintar("razonamiento_clinico", caso.razonamiento_clinico);
-            pintar("diagnostico_final", caso.diagnostico_final);
-
-            // 💊 Tratamiento
-            pintar("tratamiento_farmacologico", caso.tratamiento_farmacologico);
-            pintar("tratamiento_no_farmacologico", caso.tratamiento_no_farmacologico);
-
-            // 📖 Información Adicional
-            pintar("referencias_bibliograficas", caso.referencias_bibliograficas);
-            pintar("categoria", caso.categoria);
-            pintar("keywords", caso.keywords);
-            pintar("codigo_cie_10", caso.codigo_cie_10);
-
-          } catch (error) {
-            console.error("Error cargando caso clínico:", error);
-          }
-        }
-
-        // ============================================
-        // 4) Ejecutar la carga automáticamente al abrir la página
-        // ============================================
-        cargarCasoClinico();
-
-        // ============================================
-        // 5) Función para enviar el caso al ChatBot
-        // ============================================
-        function abrirEnChatbot() {
-          if (casoActual) {
-            localStorage.setItem("caso_clinico_activo", JSON.stringify(casoActual));
-            window.location.href = "chat.html";
-          }
-        }
-      </script>
-
-
       <!-- EVALUACIÓN MÉDICA -->
       <section class="evaluacion-medica">
         <form>
@@ -211,110 +85,60 @@
           <div class="radio-group">
             <span class="radio-label">Precisión diagnóstica</span>
             <div class="radio-items">
-              <label class="radio-item"
-                ><input type="radio" name="precision" value="1" />1</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="precision" value="2" />2</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="precision" value="3" />3</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="precision" value="4" />4</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="precision" value="5" />5</label
-              >
+              <label class="radio-item"><input type="radio" name="precision" value="1" />1</label>
+              <label class="radio-item"><input type="radio" name="precision" value="2" />2</label>
+              <label class="radio-item"><input type="radio" name="precision" value="3" />3</label>
+              <label class="radio-item"><input type="radio" name="precision" value="4" />4</label>
+              <label class="radio-item"><input type="radio" name="precision" value="5" />5</label>
             </div>
           </div>
 
           <div class="radio-group">
             <span class="radio-label">Claridad textual</span>
             <div class="radio-items">
-              <label class="radio-item"
-                ><input type="radio" name="claridad" value="1" />1</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="claridad" value="2" />2</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="claridad" value="3" />3</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="claridad" value="4" />4</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="claridad" value="5" />5</label
-              >
+              <label class="radio-item"><input type="radio" name="claridad" value="1" />1</label>
+              <label class="radio-item"><input type="radio" name="claridad" value="2" />2</label>
+              <label class="radio-item"><input type="radio" name="claridad" value="3" />3</label>
+              <label class="radio-item"><input type="radio" name="claridad" value="4" />4</label>
+              <label class="radio-item"><input type="radio" name="claridad" value="5" />5</label>
             </div>
           </div>
 
           <div class="radio-group">
             <span class="radio-label">Relevancia clínica</span>
             <div class="radio-items">
-              <label class="radio-item"
-                ><input type="radio" name="relevancia" value="1" />1</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="relevancia" value="2" />2</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="relevancia" value="3" />3</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="relevancia" value="4" />4</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="relevancia" value="5" />5</label
-              >
+              <label class="radio-item"><input type="radio" name="relevancia" value="1" />1</label>
+              <label class="radio-item"><input type="radio" name="relevancia" value="2" />2</label>
+              <label class="radio-item"><input type="radio" name="relevancia" value="3" />3</label>
+              <label class="radio-item"><input type="radio" name="relevancia" value="4" />4</label>
+              <label class="radio-item"><input type="radio" name="relevancia" value="5" />5</label>
             </div>
           </div>
 
           <div class="radio-group">
             <span class="radio-label">Adecuación contextual</span>
             <div class="radio-items">
-              <label class="radio-item"
-                ><input type="radio" name="adecuacion" value="1" />1</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="adecuacion" value="2" />2</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="adecuacion" value="3" />3</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="adecuacion" value="4" />4</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="adecuacion" value="5" />5</label
-              >
+              <label class="radio-item"><input type="radio" name="adecuacion" value="1" />1</label>
+              <label class="radio-item"><input type="radio" name="adecuacion" value="2" />2</label>
+              <label class="radio-item"><input type="radio" name="adecuacion" value="3" />3</label>
+              <label class="radio-item"><input type="radio" name="adecuacion" value="4" />4</label>
+              <label class="radio-item"><input type="radio" name="adecuacion" value="5" />5</label>
             </div>
           </div>
 
           <div class="radio-group">
             <span class="radio-label">Nivel técnico adecuado</span>
             <div class="radio-items">
-              <label class="radio-item"
-                ><input type="radio" name="nivel-tecnico" value="1" />1</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="nivel-tecnico" value="2" />2</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="nivel-tecnico" value="3" />3</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="nivel-tecnico" value="4" />4</label
-              >
-              <label class="radio-item"
-                ><input type="radio" name="nivel-tecnico" value="5" />5</label
-              >
+              <label class="radio-item"><input type="radio" name="nivel-tecnico" value="1" />1</label>
+              <label class="radio-item"><input type="radio" name="nivel-tecnico" value="2" />2</label>
+              <label class="radio-item"><input type="radio" name="nivel-tecnico" value="3" />3</label>
+              <label class="radio-item"><input type="radio" name="nivel-tecnico" value="4" />4</label>
+              <label class="radio-item"><input type="radio" name="nivel-tecnico" value="5" />5</label>
             </div>
           </div>
 
           <div class="comentario-medico">
-            <label for="comentario"> Comentario del médico </label>
+            <label for="comentario">Comentario del médico</label>
             <textarea
               id="comentario"
               name="comentario"
@@ -327,35 +151,8 @@
       </section>
     </main>
 
-    <script>
-      function guardarCasoClinico() {
-        // const caso = {
-        //   id: "caso_2024_00123",
-        //   paciente: {
-        //     nombre: "Alicia García López",
-        //     edad: 45,
-        //     genero: "Femenino",
-        //     historia: "2024-00123",
-        //     ingreso: "14/01/2026",
-        //   },
-        //   descripcion:
-        //     "Dolor abdominal agudo en cuadrante inferior derecho de 12 horas.",
-        //   antecedentes: {
-        //     alergias: "Penicilina",
-        //     enfermedades: "Hipertensión arterial",
-        //     cirugias: "Apendicectomía (2010)",
-        //     medicacion: "Enalapril 10mg/día",
-        //   },
-        //   plan: {
-        //     pruebas: "Analítica, ecografía abdominal",
-        //     tratamiento: "Analgesia, hidratación IV",
-        //   },
-        // };
-
-        localStorage.setItem("caso_clinico_activo", JSON.stringify(caso));
-
-        window.location.href = "chat.html";
-      }
-    </script>
+    <!-- JS al final del body para que el DOM ya esté listo -->
+     <script src="./js/header.js"></script>
+    <script src="./js/casoclinico.js"></script>
   </body>
 </html>

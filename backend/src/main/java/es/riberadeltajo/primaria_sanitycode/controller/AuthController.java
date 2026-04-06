@@ -1,6 +1,10 @@
 package es.riberadeltajo.primaria_sanitycode.controller;
 
 import es.riberadeltajo.primaria_sanitycode.service.OAuth2UserService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -42,6 +46,17 @@ public class AuthController {
         //Cuando el frontend pasen los modelos y se elija uno se adaptara este contenido para pasar el documento y los datos requeridos
         return oAuth2UserService.inicio(principal);
 
+    }
+
+    // Punto de entrada para obtener los datos del usuario autenticado, se devuelve un JSON con el nombre, correo y foto del usuario
+    @GetMapping("/api/usuario/me")
+    @ResponseBody
+    public Map<String, String> getUsuarioActual(@AuthenticationPrincipal OAuth2User principal) {
+        Map<String, String> usuario = new HashMap<>();
+        usuario.put("nombre", principal.getAttribute("name"));
+        usuario.put("email", principal.getAttribute("email"));
+        usuario.put("foto",  principal.getAttribute("picture"));
+        return usuario;
     }
 
 }

@@ -1,53 +1,48 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PrimarIA - ChatBot</title>
+  <html lang="es">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>PrimarIA - ChatBot</title>
 
-  <script src="./js/config.js">
-    // Al inicio del fichero, usa ENV.API_BASE donde hagas fetches al backend
-    // Por ahora el chat usa localStorage, así que no necesita cambio inmediato
-    // Pero cuando conectes el chatbot al backend:
-    // fetch(`${ENV.API_BASE}/api/chat/...`, { credentials: "include" })
-  </script> <!-- Cargar configuración (URL backend, etc.) -->
+      <script src="./js/config.js">
+        // Al inicio del fichero, usa ENV.API_BASE donde hagas fetches al backend
+        // Por ahora el chat usa localStorage, así que no necesita cambio inmediato
+        // Pero cuando conectes el chatbot al backend:
+        // fetch(`${ENV.API_BASE}/api/chat/...`, { credentials: "include" })
+      </script> <!-- Cargar configuración (URL backend, etc.) -->
 
-  <link rel="stylesheet" href="./css/chat.css">
-  <link rel="stylesheet" href="./css/header.css">
-</head>
-<body>
+      <link rel="stylesheet" href="./css/chat.css">
+      <link rel="stylesheet" href="./css/header.css">
+    </head>
+    <body>
+        <!-- ===== HEADER ===== -->
+        <app-header></app-header>
+        <script src="./js/header.js"></script>
 
-<header>
-  <h1>PrimarIA</h1>
-  <nav>
-    <a href="./casosclinico.html">Casos clínicos</a>
-    <a href="./login.html">Cerrar sesión</a>
-  </nav>
-</header>
+    <div class="chat-layout">
 
-<div class="chat-layout">
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="sidebar">
+        <button class="new-chat" onclick="nuevoChat()">+ Nuevo Chat</button>
+        <section id="historial"></section>
+      </aside>
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <button class="new-chat" onclick="nuevoChat()">+ Nuevo Chat</button>
-    <section id="historial"></section>
-  </aside>
+      <!-- ===== CHAT ===== -->
+      <main class="chat-main">
+        <div id="area-chat" class="chat-messages"></div>
 
-  <!-- ===== CHAT ===== -->
-  <main class="chat-main">
-    <div id="area-chat" class="chat-messages"></div>
+        <div class="chat-input">
+          <textarea
+            id="input-texto"
+            placeholder="Escribe tu mensaje..."
+          ></textarea>
+          <button id="btn-enviar">Enviar</button>
+        </div>
+      </main>
 
-    <div class="chat-input">
-      <textarea
-        id="input-texto"
-        placeholder="Escribe tu mensaje..."
-      ></textarea>
-      <button id="btn-enviar">Enviar</button>
     </div>
-  </main>
 
-</div>
-
-<script src="./js/script.js"></script>
-</body>
+    <script src="./js/script.js"></script>
+  </body>
 </html>
