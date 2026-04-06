@@ -24,6 +24,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        System.out.println(">>> MODO DEV ACTIVADO? " + devMode);
+
         // >>>> MODO DESARROLLO: todo permitido <<<<
         /* En modo desarrollo, se permite el acceso a todas las rutas sin autenticación, 
          * y se habilita CORS para permitir peticiones desde el frontend en localhost. 
@@ -33,9 +35,11 @@ public class SecurityConfig {
          */
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable());
         if (devMode) {
+            System.out.println(">>> ENTRANDO EN MODO DESARROLLO (permitAll)");
             http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
             return http.build();
         }
+        
 
         // Configuracion de autorizacion de http
         // Se permite acceso a punto de entrada principal ("/") y a la pantalla antes
@@ -51,6 +55,9 @@ public class SecurityConfig {
         // >>>> MODO PRODUCCIÓN: OAuth2 <<<<
         // Necesita que se añada algo similar a un token en los endpoints (utilizar el
         // codigo identificador de google, se llama sub)
+
+        System.out.println(">>> ENTRANDO EN MODO PRODUCCIÓN (OAuth2 obligatorio)");
+        
         http.authorizeHttpRequests(
                 auth -> auth.requestMatchers("/", "/api/auth/user").permitAll().anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))
@@ -69,8 +76,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5500", "http://127.0.0.1:5500"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

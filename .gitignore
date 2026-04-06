@@ -57,6 +57,11 @@ venv/
 */venv/
 dataset/venv/
 
+### Datos de sesiónn de google, cachés, archivos de configuración local, etc. ###
+/data/
+/data/*
+*.json
+
 
 
 ### Archivos generados automáticamente ###

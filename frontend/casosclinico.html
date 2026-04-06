@@ -100,8 +100,10 @@
         
         async function cargarCasoClinico() {
           try {
-            // CAMBIO: llamada al endpoint del backend
-            const response = await fetch("http://localhost:8080/api/casos/random");
+            // CAMBIO: llamada al endpoint del backend con credenciales para enviar la cookie de sesión
+            const response = await fetch("http://localhost:8080/api/casos/random", {
+              credentials: "include"
+            });
 
             // Convertimos la respuesta en JSON
             const caso = await response.json();
