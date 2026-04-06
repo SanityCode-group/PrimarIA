@@ -97,7 +97,7 @@ p{
   max-width: 900px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 30px;
 }
 
 .case-box {
@@ -112,6 +112,16 @@ p{
   margin-bottom: 10px;
   border-bottom: 2px solid var(--blue-light);
   padding-bottom: 6px;
+}
+
+.case-box p {
+  display: flex;
+  flex-direction: column;
+  margin-bottom:2px;
+}
+
+.case-box p strong {
+  margin-bottom: 4px;
 }
 
 /* ===== CHAT ===== */
@@ -236,7 +246,7 @@ p{
   padding: 0.8rem;
   border-radius: 8px;
   border: none;
-  background: #2e7d32;
+  background: #2e7d5c;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -244,7 +254,7 @@ p{
 }
 
 .btn-validar:hover {
-  background: #1b5e20;
+  background: #27694e;
 }
 
 .btn-validar:disabled {
@@ -314,11 +324,16 @@ option {
 }
 
 .evaluacion-medica {
-  width: 700px;
+  width: 550px;
   background: var(--white);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  /*Posición fija*/
+  position: sticky;
+  top: 20px;
+  height: fit-content;
 }
 
 .evaluacion-medica form {

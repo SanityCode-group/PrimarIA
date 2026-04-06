@@ -20,40 +20,67 @@
     <!-- ===== MAIN ===== -->
     <main>
       <section class="casos-clinicos">
+
+        <!-- 🩺 DATOS DEL PACIENTE -->
         <div class="case-box">
-          <h2>Información del Paciente</h2>
-          <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+          <h2>🩺 Datos del Paciente</h2>
           <p><strong>Edad:</strong> <span id="edad"></span></p>
-          <p><strong>Género:</strong> <span id="sexo"></span></p>
-          <p><strong>Número de Historia:</strong> <span id="numHistoria"></span></p>
-          <p><strong>Fecha de ingreso:</strong> <span id="fechaIngreso"></span></p>
-        </div>
-
-        <div class="case-box">
-          <h2>Descripción del Caso Clínico</h2>
-          <p>
-            <span id="descripcionCaso"></span>
-          </p>
-        </div>
-
-        <div class="case-box">
-          <h2>Antecedentes Médicos</h2>
+          <p><strong>Sexo:</strong> <span id="sexo"></span></p>
           <p><strong>Alergias:</strong> <span id="alergias"></span></p>
-          <p><strong>Enfermedades previas:</strong> <span id="enfermedades"></span></p>
-          <p><strong>Cirugías:</strong> <span id="cirugias"></span></p>
-          <p><strong>Medicación:</strong> <span id="medicacion"></span></p>
+          <p><strong>Factores sociales:</strong> <span id="factores_sociales"></span></p>
         </div>
 
+        <!-- 📚 ANTECEDENTES -->
         <div class="case-box">
-          <h2>Plan de Tratamiento</h2>
-          <p><strong>Pruebas:</strong> <span id="pruebas"></span></p>
-          <p><strong>Tratamiento:</strong> <span id="tratamiento"></span></p>
+          <h2>📚 Antecedentes</h2>
+          <p><strong>Antecedentes médicos:</strong> <span id="antecedentes_medicos"></span></p>
+          <p><strong>Antecedentes quirúrgicos:</strong> <span id="antecedentes_quirurgicos"></span></p>
+          <p><strong>Antecedentes familiares:</strong> <span id="antecedentes_familiares"></span></p>
         </div>
 
-        <!-- <button onclick="guardarCasoClinico()" class="btn-validar">
-          👉 Abrir caso en ChatBot
-        </button> -->
+        <!-- 🧬 SITUACIÓN CLÍNICA -->
+        <div class="case-box">
+          <h2>🧬 Situación Clínica</h2>
+          <p><strong>Hábitos:</strong> <span id="habitos"></span></p>
+          <p><strong>Situación basal:</strong> <span id="situacion_basal"></span></p>
+          <p><strong>Medicación actual:</strong> <span id="medicacion_actual"></span></p>
+          <p><strong>Motivo de consulta:</strong> <span id="motivo"></span></p>
+          <p><strong>Síntomas:</strong> <span id="sintomas"></span></p>
+        </div>
+
+        <!-- 🔍 EXPLORACIÓN Y PRUEBAS -->
+        <div class="case-box">
+          <h2>🔍 Exploración y Pruebas</h2>
+          <p><strong>Exploración general:</strong> <span id="exploracion_general"></span></p>
+          <p><strong>Signos:</strong> <span id="signos"></span></p>
+          <p><strong>Resultados de pruebas:</strong> <span id="resultados_pruebas"></span></p>
+        </div>
+
+        <!-- 🧠 JUICIO CLÍNICO -->
+        <div class="case-box">
+          <h2>🧠 Juicio Clínico</h2>
+          <p><strong>Razonamiento clínico:</strong> <span id="razonamiento_clinico"></span></p>
+          <p><strong>Diagnóstico final:</strong> <span id="diagnostico_final"></span></p>
+        </div>
+
+        <!-- 💊 TRATAMIENTO -->
+        <div class="case-box">
+          <h2>💊 Tratamiento</h2>
+          <p><strong>Tratamiento farmacológico:</strong> <span id="tratamiento_farmacologico"></span></p>
+          <p><strong>Tratamiento no farmacológico:</strong> <span id="tratamiento_no_farmacologico"></span></p>
+        </div>
+
+        <!-- 📖 INFORMACIÓN ADICIONAL -->
+        <div class="case-box">
+          <h2>📖 Información Adicional</h2>
+          <p><strong>Referencias bibliográficas:</strong> <span id="referencias_bibliograficas"></span></p>
+          <p><strong>Categoría:</strong> <span id="categoria"></span></p>
+          <p><strong>Keywords:</strong> <span id="keywords"></span></p>
+          <p><strong>Código CIE-10:</strong> <span id="codigo_cie_10"></span></p>
+        </div>
+
       </section>
+
 
       <script>
         // ============================================
@@ -64,6 +91,13 @@
         // ============================================
         // 2) Función que llama al backend y carga el caso
         // ============================================
+        function pintar(id, valor){
+          const elemento = document.getElementById(id);
+          if(elemento){
+            elemento.textContent = valor || "—";
+          }
+        }
+        
         async function cargarCasoClinico() {
           try {
             // CAMBIO: llamada al endpoint del backend
@@ -79,21 +113,42 @@
             // 3) Pintar los datos en el HTML
             //    (estos IDs deben existir en tu HTML)
             // ============================================
-            document.getElementById("nombre").textContent = caso.nombre || "No disponible";
-            document.getElementById("edad").textContent = caso.edad || "No disponible";
-            document.getElementById("sexo").textContent = caso.sexo || "No disponible";
-            document.getElementById("numHistoria").textContent = caso.numeroHistoria || "—";
-            document.getElementById("fechaIngreso").textContent = caso.fechaIngreso || "—";
+            // 🩺 Datos del Paciente
+            pintar("edad", caso.edad);
+            pintar("sexo", caso.sexo);
+            pintar("alergias", caso.alergias);
+            pintar("factores_sociales", caso.factores_sociales);
 
-            document.getElementById("descripcionCaso").textContent = caso.motivo || "—";
+            // 📚 Antecedentes
+            pintar("antecedentes_medicos", caso.antecedentes_medicos);
+            pintar("antecedentes_quirurgicos", caso.antecedentes_quirurgicos);
+            pintar("antecedentes_familiares", caso.antecedentes_familiares);
 
-            document.getElementById("alergias").textContent = caso.alergias || "—";
-            document.getElementById("enfermedades").textContent = caso.antecedentes_medicos || "—";
-            document.getElementById("cirugias").textContent = caso.antecedentes_quirurgicos || "—";
-            document.getElementById("medicacion").textContent = caso.medicacion_actual || "—";
+            // 🧬 Situación Clínica
+            pintar("habitos", caso.habitos);
+            pintar("situacion_basal", caso.situacion_basal);
+            pintar("medicacion_actual", caso.medicacion_actual);
+            pintar("motivo", caso.motivo);
+            pintar("sintomas", caso.sintomas);
 
-            document.getElementById("pruebas").textContent = caso.resultados_pruebas || "—";
-            document.getElementById("tratamiento").textContent = caso.tratamiento_farmacologico || "—";
+            // 🔍 Exploración y Pruebas
+            pintar("exploracion_general", caso.exploracion_general);
+            pintar("signos", caso.signos);
+            pintar("resultados_pruebas", caso.resultados_pruebas);
+
+            // 🧠 Juicio Clínico
+            pintar("razonamiento_clinico", caso.razonamiento_clinico);
+            pintar("diagnostico_final", caso.diagnostico_final);
+
+            // 💊 Tratamiento
+            pintar("tratamiento_farmacologico", caso.tratamiento_farmacologico);
+            pintar("tratamiento_no_farmacologico", caso.tratamiento_no_farmacologico);
+
+            // 📖 Información Adicional
+            pintar("referencias_bibliograficas", caso.referencias_bibliograficas);
+            pintar("categoria", caso.categoria);
+            pintar("keywords", caso.keywords);
+            pintar("codigo_cie_10", caso.codigo_cie_10);
 
           } catch (error) {
             console.error("Error cargando caso clínico:", error);

@@ -15,6 +15,13 @@ import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoOriginalService;
  * @since 15/2/26
  */
 
+/*
+ * Controlador para gestionar los casos clínicos originales, que son los casos clínicos completos y sin anonimizar que se almacenan en la base de datos.
+ * Estos casos clínicos originales se utilizan para generar las muestras que se presentan a los médicos para su validación.
+ * El controlador expone endpoints para obtener casos clínicos originales, ya sea de forma aleatoria o por ID.
+ * La lógica de negocio relacionada con los casos clínicos originales se encuentra en el servicio CasoClinicoOriginalService.
+ */
+
 @RestController
 @RequestMapping("/api/originales")
 @CrossOrigin(origins = "*")
