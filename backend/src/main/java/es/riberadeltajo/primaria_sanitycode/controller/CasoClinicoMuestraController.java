@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 */
 
-@CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"}, allowCredentials = "true") // permitir llamadas desde el frontend con cookie de sesión
+//@CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"}, allowCredentials = "true") // permitir llamadas desde el frontend con cookie de sesión
 @RestController //indica que es un controlador REST
 @RequestMapping("/api/casos") //ruta base para los endpoints de casos clínicos
 public class CasoClinicoMuestraController {

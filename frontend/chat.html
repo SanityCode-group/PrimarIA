@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrimarIA - ChatBot</title>
 
+  <script src="./js/config.js">
+    // Al inicio del fichero, usa ENV.API_BASE donde hagas fetches al backend
+    // Por ahora el chat usa localStorage, así que no necesita cambio inmediato
+    // Pero cuando conectes el chatbot al backend:
+    // fetch(`${ENV.API_BASE}/api/chat/...`, { credentials: "include" })
+  </script> <!-- Cargar configuración (URL backend, etc.) -->
+
   <link rel="stylesheet" href="./css/chat.css">
   <link rel="stylesheet" href="./css/header.css">
 </head>

@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 public class SecurityConfig {
@@ -33,7 +36,13 @@ public class SecurityConfig {
          * Postman o el frontend sin necesidad de gestionar tokens CSRF.
          *  
          */
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource())).csrf(csrf -> csrf.disable());
+        http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+        );
+
         if (devMode) {
             System.out.println(">>> ENTRANDO EN MODO DESARROLLO (permitAll)");
             http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
@@ -57,12 +66,36 @@ public class SecurityConfig {
         // codigo identificador de google, se llama sub)
 
         System.out.println(">>> ENTRANDO EN MODO PRODUCCIÓN (OAuth2 obligatorio)");
-        
-        http.authorizeHttpRequests(
-                auth -> auth.requestMatchers("/", "/api/auth/user").permitAll().anyRequest().authenticated())
-                .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))
-                .logout(logout -> logout.logoutSuccessUrl("/api/auth/user").invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID").permitAll());
+
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/api/auth/user", "/login.html", "/css/**", "/js/**", "/oauth2/**", "/login/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                .successHandler(oAuth2SuccessHandler)
+            )
+            .exceptionHandling(e -> e
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                })
+            );
+                // .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))
+                // .logout(logout -> logout
+                //     .logoutSuccessUrl("/api/auth/user")
+                //     .invalidateHttpSession(true)
+                //     .deleteCookies("JSESSIONID")
+                //     .permitAll()
+                // )
+                // //corregir error redirección de CORS
+                // .exceptionHandling(e -> e
+                //     .authenticationEntryPoint((request, response, authException) -> {
+                //         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                //         response.getWriter().write("{\"error\": \"No autenticado. Por favor, inicia sesión con Google.\"}");
+                //     })
+                // );
 
         return http.build();
 
@@ -75,12 +108,18 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5500", "http://127.0.0.1:5500"));
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5500", 
+            "http://127.0.0.1:5500", 
+            "https://sanitycode.riberadeltajo.es"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 

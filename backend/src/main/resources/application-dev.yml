@@ -1,16 +1,31 @@
-# Seguridad relajada para desarrollo
+# LOCAL SIN LOGING, PARA DESARROLLO CON LIVE-SERVER DE VISUAL STUDIO CODE (O SIMILAR)
 app:
   security:
     dev-mode: true
-
-  # URL del frontend para CORS y redirecciones en desarrollo local con live-server de Visual Studio Code
   frontend-url: http://127.0.0.1:5500/frontend
 
 server:
   servlet:
     session:
-    # Configuración de cookies para desarrollo local 
       cookie:
-        same-site: None
+        same-site: Lax   # No necesita None porque no hay OAuth2 cross-origin
         secure: false
         http-only: true
+
+
+# # Seguridad relajada para desarrollo
+# app:
+#   security:
+#     dev-mode: true
+
+#   # URL del frontend para CORS y redirecciones en desarrollo local con live-server de Visual Studio Code
+#   frontend-url: http://127.0.0.1:5500/frontend
+
+# server:
+#   servlet:
+#     session:
+#     # Configuración de cookies para desarrollo local 
+#       cookie:
+#         same-site: None
+#         secure: false
+#         http-only: true

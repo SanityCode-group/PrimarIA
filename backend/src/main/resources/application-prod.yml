@@ -1,0 +1,63 @@
+# LOCAL CON LOGIN 
+app:
+  security:
+    dev-mode: false
+  frontend-url: http://127.0.0.1:5500/frontend  # el frontend sigue en live-server local
+
+server:
+  address: 127.0.0.1
+  servlet:
+    session:
+      timeout: 10m
+      cookie:
+        same-site: Lax   # necesario porque Google redirige cross-origin
+        secure: false     # false porque localhost no tiene HTTPS
+        http-only: true
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            client-id: ${GOOGLE_CLIENTE_ID}
+            client-secret: ${GOOGLE_CLIENTE_SECRETO}
+            scope:
+              - email
+              - profile
+              - openid
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+#               - email
+#               - profile
+#               - openid
+#         provider:
+#           google:
+#             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+#             token-uri: https://oauth2.googleapis.com/token
+#             user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+#             user-name-attribute: sub
+
+# # URL del frontend para CORS y redirecciones en producción (ajustar según el despliegue real)
+# app:
+#   frontend-url: http://127.0.0.1:5500/frontend
+
+# server:
+#   servlet:
+#     session:
+#       timeout: 10m
+#       # Configuración de cookies para desarrollo local 
+#       cookie:
+#         same-site: None
+#         secure: true
+#         http-only: true

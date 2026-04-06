@@ -84,6 +84,14 @@ PrimarIA es una aplicación web diseñada para la gestión de casos clínicos en
 5. Accede al frontend:
    - Abre un navegador y ve a `http://localhost:8080` (o el puerto configurado).
 
+
+## Acceso desde diferentes entornos de ejecución
+| Entorno  | URL de entrada |
+|-----------|-------------|
+| Dev sin login | http://127.0.0.1:5500/frontend/login.html | 
+| Prod local con login | http://127.0.0.1:5500/frontend/login.html?mode=prod | 
+| Deploy | https://sanitycode.riberadeltajo.es/login.html| 
+
 ## 📚 Uso
 - **Login**: Inicia sesión con tus credenciales.
 - **Casos Clínicos**: Navega a la sección de casos clínicos para gestionar registros.

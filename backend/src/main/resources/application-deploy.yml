@@ -1,0 +1,14 @@
+# SERVIDOR REAL CON DOMINIO Y HTTPS, PARA DESPLIEGUE EN PRODUCCIÓN
+app:
+  security:
+    dev-mode: false
+  frontend-url: https://sanitycode.riberadeltajo.es  # sin /frontend si el frontend está en la raíz
+
+server:
+  servlet:
+    session:
+      timeout: 10m
+      cookie:
+        same-site: None
+        secure: true      # HTTPS real
+        http-only: true

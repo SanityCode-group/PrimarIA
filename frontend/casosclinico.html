@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PrimarIA - Caso Clínico</title>
 
+    <script src="./js/config.js"></script> <!-- Cargar configuración (URL backend, etc.) -->
+
     <link rel="stylesheet" href="./css/casoclinico.css" />
   </head>
   <body>
@@ -101,9 +103,36 @@
         async function cargarCasoClinico() {
           try {
             // CAMBIO: llamada al endpoint del backend con credenciales para enviar la cookie de sesión
-            const response = await fetch("http://localhost:8080/api/casos/random", {
+            // const response = await fetch("http://localhost:8080/api/casos/random", {
+            //   credentials: "include"
+            // });
+            const response = await fetch(`${ENV.API_BASE}/api/casos/random`, {
               credentials: "include"
             });
+
+            if (response.status === 401) {
+              if (ENV.requiresAuth) {
+                console.warn("No autenticado. Redirigiendo a Google...");
+                window.location.href = `${ENV.API_BASE.replace("/api", "")}/oauth2/authorization/google`;
+              } else {
+                console.warn("401 en modo dev — ¿está activo dev-mode en el backend?");
+              }
+              return;
+            }
+
+            if (!response.ok) {
+              throw new Error(`Error en la respuesta: ${response.status}`);
+            }
+
+            // // Si la respuesta no es 200 OK, algo va mal (probablemente sesión expirada)
+            // if (!response.ok) {
+            //   if (response.status === 401 || response.status === 403) {
+            //     console.warn("No autenticado. Redirigiendo a login...");
+            //     window.location.href = "login.html"; // O la URL de tu login
+            //     return;
+            //   }
+            //   throw new Error(`Error del servidor: ${response.status}`);
+            // }
 
             // Convertimos la respuesta en JSON
             const caso = await response.json();
@@ -300,28 +329,28 @@
 
     <script>
       function guardarCasoClinico() {
-        const caso = {
-          id: "caso_2024_00123",
-          paciente: {
-            nombre: "Alicia García López",
-            edad: 45,
-            genero: "Femenino",
-            historia: "2024-00123",
-            ingreso: "14/01/2026",
-          },
-          descripcion:
-            "Dolor abdominal agudo en cuadrante inferior derecho de 12 horas.",
-          antecedentes: {
-            alergias: "Penicilina",
-            enfermedades: "Hipertensión arterial",
-            cirugias: "Apendicectomía (2010)",
-            medicacion: "Enalapril 10mg/día",
-          },
-          plan: {
-            pruebas: "Analítica, ecografía abdominal",
-            tratamiento: "Analgesia, hidratación IV",
-          },
-        };
+        // const caso = {
+        //   id: "caso_2024_00123",
+        //   paciente: {
+        //     nombre: "Alicia García López",
+        //     edad: 45,
+        //     genero: "Femenino",
+        //     historia: "2024-00123",
+        //     ingreso: "14/01/2026",
+        //   },
+        //   descripcion:
+        //     "Dolor abdominal agudo en cuadrante inferior derecho de 12 horas.",
+        //   antecedentes: {
+        //     alergias: "Penicilina",
+        //     enfermedades: "Hipertensión arterial",
+        //     cirugias: "Apendicectomía (2010)",
+        //     medicacion: "Enalapril 10mg/día",
+        //   },
+        //   plan: {
+        //     pruebas: "Analítica, ecografía abdominal",
+        //     tratamiento: "Analgesia, hidratación IV",
+        //   },
+        // };
 
         localStorage.setItem("caso_clinico_activo", JSON.stringify(caso));
 
