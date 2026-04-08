@@ -6,7 +6,8 @@ class AppHeader extends HTMLElement {
   }
 
   connectedCallback() {
-    const usuario = this.getAttribute('usuario') || '';
+    const usuarioAttr = this.getAttribute('usuario');
+    const usuario = usuarioAttr && usuarioAttr !== 'undefined' && usuarioAttr !== 'null' ? usuarioAttr : '';
     this.innerHTML = `
       <header>
         <h1>PrimarIA</h1>
@@ -27,8 +28,15 @@ customElements.define('app-header', AppHeader);
 async function cargarUsuario() {
   try {
     const res = await fetch(`${ENV.API_BASE}/api/usuario/me`, { credentials: 'include' });
+    if (!res.ok) {
+      console.warn('No autenticado o no se pudo cargar usuario:', res.status);
+      return;
+    }
     const data = await res.json();
-    document.querySelector('app-header').setAttribute('usuario', data.nombre);
+    const nombre = data?.nombre || data?.name || data?.given_name || '';
+    if (nombre) {
+      document.querySelector('app-header').setAttribute('usuario', nombre);
+    }
   } catch (e) {
     console.error('Error cargando usuario:', e);
   }
