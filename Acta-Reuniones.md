@@ -305,48 +305,44 @@ Tareas realizadas:
 
 
 ---------------------------------------------------
-# 🧾 Acta de Sesión xx/xx/2026
+# 🧾 Acta de Sesión 08/04/2026
 
 ### Asistentes
 
 | Nombre                             | Asistencia |
 |------------------------------------|------------|
-| Lucas Melero Mendiondo             | ✔️  ❌       |
-| Rubén Mora López                   | ✔️  ❌       |
-| Christian García Ruiz              | ✔️  ❌       |
-| David Egea Muñoz                   | ✔️  ❌       |
-| María Carolina García Correas      | ✔️  ❌       |
-| José Antonio García Pajares        | ✔️  ❌       |
-| Marina Miguel Zapata               | ✔️  ❌       |
+| Lucas Melero Mendiondo             | ✔️         |
+| Rubén Mora López                   | ✔️         |
+| Christian García Ruiz              | ✔️         |
+| David Egea Muñoz                   | ✔️         |
+| María Carolina García Correas      | ✔️         |
+| José Antonio García Pajares        | ✔️         |
+| Marina Miguel Zapata               | ✔️         |
 
 
 ### Objetivos
 
-aaa
+Establecer nivel de compromiso de cada miembro del equipo con el proyecto.
 
-### Temas tratados / Orden del día
+### Temas tratados
 
-aaa
+- Actualización del estado del proyecto.
+- Debatir problemas de desarrollo del trabajo y definición de tareas.
+- Establecimiento de prioridades.
 
-### Desarrollo de la sesión
 
-aaa
+### Tareas pendientes programadas
 
-### Acuerdos y decisiones tomadas
+- Subida de test (el trabajo hecho hasta la fecha)
+- Subida de documentación (el trabajo hecho hasta la fecha)
+- Investigación despliegue en documento compartido
+- Implementación algoritmo
 
-aaa
+### Conclusión
 
-### Tareas cumplidas de la sesión anterior
+A espera de demostración de compromiso por parte de todos los integrantes del equipo.
+ 
 
-aaa
-
-### Tareas pendientes de la sesión anterior
-
-aaa
-
-### Tareas pendientes
-
-aaa
 
 
 ---------------------------------------------------
