@@ -43,7 +43,7 @@ app:
 server:
   servlet:
     session:
-      timeout: 10m
+      timeout: 20m
       cookie:
         same-site: None
         secure: true

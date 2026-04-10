@@ -2,12 +2,20 @@ const ENV = (() => {
   const host = window.location.hostname;
   const params = new URLSearchParams(window.location.search);
 
-  // Si viene ?mode=prod en la URL, lo guardamos para que sobreviva la redirección de Google
+  // 1. Detectar si forzamos modo prod via URL
   if (params.get("mode") === "prod") {
-    sessionStorage.setItem("app_mode", "prod");
+    localStorage.setItem("app_mode", "prod");
   }
 
-  const mode = sessionStorage.getItem("app_mode");
+  const mode = localStorage.getItem("app_mode");
+
+  // 2. Redirección automática si estamos en localhost pero queremos modo prod
+  // (Evita que el usuario pierda la sesión por desajuste de origen)
+  if (mode === "prod" && host === "localhost") {
+    console.warn("Redirigiendo a 127.0.0.1 para mantener consistencia de sesión (PROD)");
+    const newUrl = window.location.href.replace("localhost", "127.0.0.1");
+    window.location.replace(newUrl);
+  }
 
   // DEPLOY — dominio real
   if (host === "sanitycode.riberadeltajo.es") {
@@ -18,8 +26,8 @@ const ENV = (() => {
     };
   }
 
-  // PROD LOCAL — con login de Google
-  if (mode === "prod") {
+  // PROD LOCAL — con login de Google (forzamos 127.0.0.1)
+  if (mode === "prod" || host === "127.0.0.1") {
     return {
       nombre: "prod-local",
       API_BASE: "http://127.0.0.1:8080",
