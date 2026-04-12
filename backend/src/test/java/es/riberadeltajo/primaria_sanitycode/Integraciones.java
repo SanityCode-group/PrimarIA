@@ -15,13 +15,38 @@ class Integraciones {
     private CasoClinicoMuestraService service;
 
     @Test
-    void testObtenerCasoClinicoAleatorioIntegracion() {
-        // Obtener un caso clínico aleatorio desde la BD
+    public void testObtenerCasoClinicoAleatorioIntegracion() {
+        System.out.println("\n=== TEST INTEGRACIÓN: Obtener caso clínico ===");
+
         CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
-        assertNotNull(resultado, "No se obtuvo ningún caso clínico de la BD");
-        assertNotNull(resultado.getCasoOriginal(), "El caso clínico no tiene asociado un original");
-        assertNotNull(resultado.getCasoOriginal().getEdad(), "El caso original debe tener edad");
-        assertNotNull(resultado.getCasoOriginal().getDiagnostico_final(), "El caso original debe tener diagnóstico final");
+        System.out.println("Caso obtenido: " + resultado);
+
+        if (resultado != null && resultado.getCasoOriginal() != null) {
+            System.out.println("Edad: " + resultado.getCasoOriginal().getEdad());
+            System.out.println("Diagnóstico: " + resultado.getCasoOriginal().getDiagnostico_final());
+        }
+
+        assertNotNull(resultado);
+        assertNotNull(resultado.getCasoOriginal());
+        assertNotNull(resultado.getCasoOriginal().getEdad());
+        assertNotNull(resultado.getCasoOriginal().getDiagnostico_final());
+
+        System.out.println("✔ TEST INTEGRACIÓN OK");
+    }
+
+    @Test
+    public void testMultiplesLlamadas() {
+        System.out.println("\n=== TEST INTEGRACIÓN: múltiples llamadas ===");
+
+        for (int i = 0; i < 3; i++) {
+            CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
+
+            System.out.println("Iteración " + i + ": " + resultado);
+
+            assertNotNull(resultado);
+        }
+
+        System.out.println("✔ TEST MÚLTIPLES OK");
     }
 }

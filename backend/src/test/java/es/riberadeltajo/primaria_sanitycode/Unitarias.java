@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoMuestra;
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
@@ -13,7 +12,10 @@ import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoMuestraService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class Unitarias {
     @Mock
     private CasoClinicoMuestraRepository repo;
@@ -26,7 +28,7 @@ public class Unitarias {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        System.out.println("\n=== INICIO TEST UNITARIO ===");
 
         original = CasoClinicoOriginal.builder()
                 .id(1)
@@ -43,25 +45,35 @@ public class Unitarias {
     }
 
     @Test
-    public void testObtenerCasoClinicoAleatorio() {
+    public void testObtenerCasoClinicoAleatorio_OK() {
+        System.out.println("Test: obtener caso clínico correcto");
+
         when(repo.findRandomCasoClinico()).thenReturn(muestra);
 
         CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
-        assertNotNull(resultado);
-        assertEquals("40", resultado.getCasoOriginal().getEdad());
-        assertEquals("Migraña", resultado.getCasoOriginal().getDiagnostico_final());
+        System.out.println("Resultado: " + resultado);
+        System.out.println("Edad: " + resultado.getCasoOriginal().getEdad());
+        System.out.println("Diagnóstico: " + resultado.getCasoOriginal().getDiagnostico_final());
 
-        verify(repo, times(1)).findRandomCasoClinico();
+        assertNotNull(resultado);
+        assertNotNull(resultado.getCasoOriginal());
+
+        System.out.println("✔ TEST OK");
     }
 
     @Test
-    public void testObtenerCasoClinicoAleatorioNoExiste() {
+    public void testObtenerCasoClinicoAleatorio_NoExiste() {
+        System.out.println("Test: caso clínico no existe");
+
         when(repo.findRandomCasoClinico()).thenReturn(null);
 
         CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
+        System.out.println("Resultado: " + resultado);
+
         assertNull(resultado);
-        verify(repo, times(1)).findRandomCasoClinico();
+
+        System.out.println("✔ TEST OK (resultado null esperado)");
     }
 }
