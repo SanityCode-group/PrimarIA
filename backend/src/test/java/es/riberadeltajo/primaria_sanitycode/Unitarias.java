@@ -4,12 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoMuestra;
 import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoMuestraRepository;
 import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoMuestraService;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +50,7 @@ public class Unitarias {
 
         CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
-        System.out.println("Resultado: " + resultado);
+        System.out.println("Resultado: " + resultado.getId());
         System.out.println("Edad: " + resultado.getCasoOriginal().getEdad());
         System.out.println("Diagnóstico: " + resultado.getCasoOriginal().getDiagnostico_final());
 

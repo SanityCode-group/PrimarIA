@@ -5,7 +5,6 @@ import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoMuestraService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -20,7 +19,7 @@ class Integraciones {
 
         CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
-        System.out.println("Caso obtenido: " + resultado);
+        System.out.println("Caso obtenido: " + resultado.getId());
 
         if (resultado != null && resultado.getCasoOriginal() != null) {
             System.out.println("Edad: " + resultado.getCasoOriginal().getEdad());
@@ -42,7 +41,7 @@ class Integraciones {
         for (int i = 0; i < 3; i++) {
             CasoClinicoMuestra resultado = service.obtenerCasoClinicoAleatorio();
 
-            System.out.println("Iteración " + i + ": " + resultado);
+            System.out.println("Iteración " + i + ": " + resultado.getId());
 
             assertNotNull(resultado);
         }
