@@ -4,21 +4,17 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>PrimarIA - ChatBot</title>
+      <link rel="icon" type="image/png" href="./assets/img/favicon.png">
 
-      <script src="./js/config.js">
-        // Al inicio del fichero, usa ENV.API_BASE donde hagas fetches al backend
-        // Por ahora el chat usa localStorage, así que no necesita cambio inmediato
-        // Pero cuando conectes el chatbot al backend:
-        // fetch(`${ENV.API_BASE}/api/chat/...`, { credentials: "include" })
-      </script> <!-- Cargar configuración (URL backend, etc.) -->
 
-      <link rel="stylesheet" href="./css/chat.css">
       <link rel="stylesheet" href="./css/header.css">
+      <link rel="stylesheet" href="./css/chat.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
     <body>
         <!-- ===== HEADER ===== -->
         <app-header></app-header>
-        <script src="./js/header.js"></script>
+        <script type="module" src="./js/components/AppHeader.js"></script>
 
     <div class="chat-layout">
 
@@ -43,6 +39,6 @@
 
     </div>
 
-    <script src="./js/script.js"></script>
+    <script type="module" src="./js/pages/chat.js"></script>
   </body>
 </html>

@@ -1,209 +1,205 @@
-/* ===============================
-   VARIABLES GLOBALES
-================================ */
+/* ======= Chat Minimalista y Premium ======= */
 :root {
-  --blue: #4285f4;
-  --blue-light: #e3f2fd;
+  --blue-primary: #4285f4;
+  --blue-dark: #1266f1;
+  --blue-bg: #f8fbff;
   --white: #ffffff;
-  --gray: #f5f5f5;
-  --text: #2c3e50;
-  --border: #dcdcdc;
-}
-
-/* ===============================
-   RESET
-================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --text-main: #333333;
+  --text-muted: #666666;
+  --border-color: #e0e6ed;
+  --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 body {
-  background: linear-gradient(135deg, #f0f4ff 0%, #d9e4ff 100%);
-  color: var(--text);
-}
-
-/* ===============================
-   HEADER
-================================ */
-header {
-  height: 70px;
-  background: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-  color: var(--blue);
-  font-size: 28px;
-}
-
-header nav a {
-  text-decoration: none;
-  color: var(--text);
-  margin-left: 24px;
-  padding: 8px 16px;
-  border-radius: 8px;
-}
-
-header nav a:hover {
-  background: var(--blue-light);
-  color: var(--blue);
-}
-
-/* ===============================
-   LAYOUT CHAT
-================================ */
-.chat-layout {
-  display: flex;
-  height: calc(100vh - 70px);
-}
-
-/* ===============================
-   SIDEBAR
-================================ */
-.sidebar {
-  width: 260px;
-  background: var(--blue-light);
-  padding: 16px;
-  border-right: 1px solid var(--border);
+  height: 100vh;
+  background: var(--blue-bg);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding-top: 80px; /* Espacio para el header fijo */
+}
+
+.chat-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ======= SIDEBAR (HISTORIAL) ======= */
+.sidebar {
+  width: 300px;
+  background: var(--white);
+  border-right: 1px solid var(--border-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .new-chat {
-  background: var(--blue);
+  background: var(--blue-primary);
   color: var(--white);
   border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
-  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .new-chat:hover {
-  background: #357ae8;
+  background: var(--blue-dark);
+  transform: translateY(-1px);
 }
 
 #historial {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  overflow-y: auto;
+  gap: 8px;
 }
 
-/* ===============================
-   CHAT ITEM
-================================ */
 .chat-item {
-  background: var(--white);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .chat-item:hover {
-  background: var(--blue-light);
-  color: var(--blue);
+  background: var(--blue-bg);
+  color: var(--blue-primary);
 }
 
 .chat-item.active {
-  background: var(--blue);
-  color: var(--white);
+  background: var(--blue-bg);
+  color: var(--blue-primary);
+  border-color: var(--blue-primary);
+  font-weight: 600;
 }
 
 .delete-btn {
-  font-weight: bold;
-  cursor: pointer;
+  opacity: 0;
+  color: #ef4444;
+  transition: opacity 0.2s ease;
 }
 
-/* ===============================
-   CHAT MAIN
-================================ */
+.chat-item:hover .delete-btn {
+  opacity: 1;
+}
+
+/* ======= CHAT MAIN ======= */
 .chat-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: transparent;
+  background: var(--blue-bg);
+  padding: 40px;
 }
 
 .chat-messages {
   flex: 1;
-  padding: 24px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  padding-bottom: 24px;
 }
 
-/* ===============================
-   MENSAJES
-================================ */
 .mensaje-user {
   align-self: flex-end;
-  background: var(--blue);
+  background: var(--blue-primary);
   color: var(--white);
-  padding: 12px 14px;
-  border-radius: 12px;
-  max-width: 70%;
+  padding: 12px 20px;
+  border-radius: 16px 16px 4px 16px;
+  max-width: 65%;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
 }
 
 .mensaje-ai {
   align-self: flex-start;
   background: var(--white);
-  border: 1px solid var(--border);
-  padding: 12px 14px;
-  border-radius: 12px;
-  max-width: 70%;
+  color: var(--text-main);
+  padding: 16px 20px;
+  border-radius: 16px 16px 16px 4px;
+  max-width: 75%;
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-card);
 }
 
-/* ===============================
-   INPUT CHAT
-================================ */
+/* ======= INPUT AREA ======= */
 .chat-input {
   display: flex;
-  gap: 10px;
-  padding: 14px;
+  gap: 16px;
+  padding: 24px;
   background: var(--white);
-  border-top: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
 }
 
 .chat-input textarea {
   flex: 1;
+  border: none;
   resize: none;
-  height: 50px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  height: 48px;
+  padding: 12px;
+  font-size: 0.95rem;
+  background: transparent;
 }
 
 .chat-input textarea:focus {
   outline: none;
-  border-color: var(--blue);
 }
 
 .chat-input button {
-  background: var(--blue);
+  background: var(--blue-primary);
   color: var(--white);
   border: none;
-  padding: 0 20px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .chat-input button:hover {
-  background: #357ae8;
+  background: var(--blue-dark);
+}
+
+/* ======= RESPONSIVIDAD ======= */
+@media (max-width: 900px) {
+  .chat-layout {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .chat-main {
+    padding: 20px;
+  }
+  
+  .mensaje-user, .mensaje-ai {
+    max-width: 90%;
+  }
 }

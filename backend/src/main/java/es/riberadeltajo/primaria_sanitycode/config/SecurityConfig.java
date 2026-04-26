@@ -24,18 +24,14 @@ public class SecurityConfig {
     @Value("${app.security.dev-mode:false}")
     private boolean devMode;
 
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         System.out.println(">>> MODO DEV ACTIVADO? " + devMode);
 
-        // >>>> MODO DESARROLLO: todo permitido <<<<
-        /* En modo desarrollo, se permite el acceso a todas las rutas sin autenticación, 
-         * y se habilita CORS para permitir peticiones desde el frontend en localhost. 
-         * Además, se deshabilita CSRF para facilitar las pruebas con herramientas como 
-         * Postman o el frontend sin necesidad de gestionar tokens CSRF.
-         *  
-         */
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
@@ -48,38 +44,27 @@ public class SecurityConfig {
             http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
             return http.build();
         }
-        
-
-        // Configuracion de autorizacion de http
-        // Se permite acceso a punto de entrada principal ("/") y a la pantalla antes
-        // del login de google ("/api/auth/user")
-        // El resto necesitan que estes autentificado
-        // Tras la autentificacion se accede de manera forzada a el punto de
-        // autentificacion aceptada ("/api/auth/success")
-        // Al cerrar sesion se le eliminan las cookies de sesion y se le invalida la
-        // sesion, siendo dirigido a la pantalla de login ("/api/auth/user")
-        // Se creo el archivo application.yml para la conexion con google y añadir un
-        // timeout (forma parte de OAuth2)
-
-        // >>>> MODO PRODUCCIÓN: OAuth2 <<<<
-        // Necesita que se añada algo similar a un token en los endpoints (utilizar el
-        // codigo identificador de google, se llama sub)
 
         System.out.println(">>> ENTRANDO EN MODO PRODUCCIÓN (OAuth2 obligatorio)");
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/api/auth/user", "/login.html", "/css/**", "/js/**", "/oauth2/**", "/login/**").permitAll()
+                .requestMatchers("/", "/api/auth/user", "/index.html", "/css/**", "/js/**", "/oauth2/**", "/login/**").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
                 .successHandler(oAuth2SuccessHandler)
+                .failureUrl(frontendUrl + "/index.html?error=google")
             )
             .exceptionHandling(e -> e
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.setContentType("application/json");
-                    response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                    if (request.getRequestURI().startsWith("/api")) {
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.setContentType("application/json");
+                        response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                    } else {
+                        response.sendRedirect(frontendUrl + "/index.html");
+                    }
                 })
             );
                 // .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))

@@ -1,14 +1,33 @@
 package es.riberadeltajo.primaria_sanitycode.controller;
 
+import es.riberadeltajo.primaria_sanitycode.model.dto.ValidacionRequest;
+import es.riberadeltajo.primaria_sanitycode.service.ValidacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/validaciones")
 public class ValidacionesController {
 
-    //TODO: implementar controlador para gestionar las validaciones de los casos clínicos por parte de los médicos
-    //validar campos correctos
-    //validar que un caso clínico no se valide más de una vez por el mismo médico
-    //validar permisos de un médico para evaluar un caso clínico
-    //....
-    
-    //TODO: exponer endoints de  validación
-    //La lógica de validacioens irá en un ValidacionesServide, que se encargará de gestionar las validaciones, guardarlas en la base de datos y actualizar el estado de los casos clínicos
-    
+    @Autowired
+    private ValidacionService validacionService;
+
+    @PostMapping
+    public ResponseEntity<?> guardarValidacion(@RequestBody ValidacionRequest request, 
+                                             @AuthenticationPrincipal OAuth2User principal) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body("Usuario no autenticado");
+        }
+
+        String email = principal.getAttribute("email");
+        try {
+            validacionService.guardarValidacion(request, email);
+            return ResponseEntity.ok("Validación guardada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al guardar la validación: " + e.getMessage());
+        }
+    }
 }

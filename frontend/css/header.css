@@ -1,53 +1,125 @@
+/* ======= Header Minimalista y Premium ======= */
 :root {
-  --blue: #4285f4;
-  --blue-light: #e3f2fd;
+  --blue-primary: #4285f4;
+  --blue-dark: #1266f1;
+  --blue-bg: #f8fbff;
   --white: #ffffff;
-  --gray: #f5f5f5;
-  --text: #2c3e50;
-  --border: #dcdcdc;
+  --text-main: #333333;
+  --text-muted: #666666;
+  --border-color: #e0e6ed;
+  --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 header {
-  grid-column: 1 / 3;
   background: var(--white);
-  color: var(--text);
-  padding: 20px 50px;
+  padding: 0 40px;
+  height: 80px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  position: fixed; /* Cambiado de sticky a fixed */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 header h1 {
-  color: var(--blue);
-  font-size: 32px;
-  font-weight: 700;
+  color: var(--blue-primary);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 header nav {
   display: flex;
-  gap: 30px;
+  gap: 8px;
   align-items: center;
 }
 
 header nav a {
-  color: var(--text);
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
+  color: var(--text-muted);
   padding: 10px 20px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
 header nav a:hover {
-  background: var(--blue-light);
-  color: var(--blue);
+  background: var(--blue-bg);
+  color: var(--blue-primary);
+}
+
+header nav a.active {
+  background: var(--blue-bg);
+  color: var(--blue-primary);
+  font-weight: 600;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-left: 20px;
+  margin-left: 10px;
+  border-left: 1px solid var(--border-color);
+}
+
+.user-info span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.btn-logout {
+  text-decoration: none; 
+  color: #dc3545; 
+  font-weight: 500; 
+  padding: 8px 16px; 
+  border: 1px solid #dc3545; 
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: transparent; /* Restaurado a transparente */
+}
+
+.btn-logout:hover {
+  background: #dc3545;
+  color: white;
+  transform: none; /* Quitar transformación del login */
+}
+
+/* ======= Responsividad ======= */
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  header nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .user-info {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+    padding: 15px 0 0 0;
+    margin-left: 0;
+    justify-content: center;
+  }
 }
