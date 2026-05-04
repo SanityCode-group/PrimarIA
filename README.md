@@ -1,7 +1,7 @@
 <h1>🩺 PrimarIA</h1>
 
 <p align="center">
-  <img src="./frontend/assets/img/logo-primaria-sanitycode-equipo.svg" width="90">
+  <img src="./frontend/assets/img/logo-primaria-sanitycode.svg" width="90">
 </p>
 
 <p align="center">
@@ -49,7 +49,7 @@ PrimarIA es una aplicación web diseñada para la gestión de casos clínicos en
 ## 💻 Tecnologías Utilizadas
 - **Backend**: Java 17, Spring Boot, Spring Security, JPA/Hibernate
 - **Frontend**: HTML, CSS, JavaScript
-- **Base de Datos**: MySQL
+- **Base de Datos**: MariaDB/MySQL
 - **Herramientas de Construcción**: Maven
 - **Control de versiones**: Git, GitHub
 
@@ -172,23 +172,11 @@ PrimarIA/
 ## 👥 Equipo de desarrollo - SanityCode
 
 
-# 🧩 Frontend – SaniDev
-
-| Nombre                    | Rol        |
-|---------------------------|------------|
-| Lucas Melero Mendiondo   | Frontend Leader   |
-| Rubén Mora López         | Frontend   |
-| Christian García Ruiz    | Frontend   |
-
-
-# ⚙️ Backend – FourCode
-
 | Nombre                          | Rol                               |
 |---------------------------------|------------------------------------|
-| David Egea Muñoz               | Tester                             |
-| María Carolina García Correas  | Dev, despliegue, Backend Leader            |
-| José Antonio García Pajares    | Documentación y seguridad          |
-| Marina Miguel Zapata           | Base de datos                      |
+| David Egea Muñoz               | Tester, Dev                         |
+| María Carolina García Correas  | Dev, despliegue, Backend Leader     |
+| Marina Miguel Zapata           | Base de datos, Documentación, Dev   |
 
 
 ## 🤝 Contribución
@@ -206,5 +194,5 @@ Para preguntas o soporte, contacta al equipo de desarrollo.
 
 <br>
 <p align="center">
-  <img src="./frontend/assets/img/logo-primaria-sanitycode-equipo.svg" width="90">
+  <img src="./frontend/assets/img/logo-primaria-sanitycode.svg" width="90">
 </p>

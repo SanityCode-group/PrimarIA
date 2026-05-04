@@ -31,7 +31,16 @@ class ApiService {
     // Si no hay contenido, devolver que está ok
     if (response.status === 204) return true;
 
-    return response.json();
+    //return response.json();
+    const text = await response.text();
+
+    if (!text) return true; // respuesta vacía
+
+    try {
+      return JSON.parse(text);
+    } catch {
+      return text; // por si devuelve "OK" u otro texto
+    }
   }
 
   // Usuarios

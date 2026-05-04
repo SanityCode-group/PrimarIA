@@ -126,8 +126,8 @@ public class CasoClinicoOriginal {
     @Column(name = "chunk")
     private String chunk;
 
-    //ia_generadora VARCHAR(255)
-    @Column(name = "ia_generadora")
-    private String ia_generadora;
+    //agente VARCHAR(255)
+    @Column(name = "agente")
+    private String agente;
 
 }

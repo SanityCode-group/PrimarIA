@@ -71,12 +71,23 @@ class ValidationPage {
     try {
       await apiService.guardarValidacion(payload);
       alert("✅ Validación guardada correctamente.");
-      DOMUtils.resetForm("form");
-      this.cargarCasoClinico();
+      //DOMUtils.resetForm("form");
+      this.resetFormularioValidacion();
+      await this.cargarCasoClinico();
       DOMUtils.scrollToTop();
     } catch (error) {
       alert("❌ Error al guardar: " + error.message);
     }
+  }
+
+  resetFormularioValidacion() {
+    // Reset radios
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => radio.checked = false);
+
+    // Reset textarea
+    const comentario = document.getElementById("comentario");
+    if (comentario) comentario.value = "";
   }
 }
 

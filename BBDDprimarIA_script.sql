@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS whitelist (
 );
 
 CREATE TABLE IF NOT EXISTS casos_clinicos_originales (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     edad VARCHAR(50),
     sexo VARCHAR(50),
     antecedentes_medicos TEXT,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS casos_clinicos_originales (
     dificultad VARCHAR(50),
     chunk_id VARCHAR(255),
     chunk VARCHAR(255),
-    ia_generadora VARCHAR(255)
+    agente VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS casos_clinicos_muestra (
@@ -65,6 +65,9 @@ CREATE TABLE IF NOT EXISTS casos_clinicos_muestra (
 		FOREIGN KEY (id_original) 
         REFERENCES casos_clinicos_originales(id)
 );
+
+ALTER TABLE casos_clinicos_muestra
+ADD UNIQUE (id_original);
 
 CREATE TABLE IF NOT EXISTS validaciones (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
