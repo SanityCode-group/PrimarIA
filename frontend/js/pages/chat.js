@@ -1,3 +1,5 @@
+import { ENV } from '../services/config.js';
+
 class ChatService {
   static cargarChats() {
     return JSON.parse(localStorage.getItem("mis_chats")) || [];
@@ -69,6 +71,7 @@ class ChatPage {
   setupEventListeners() {
     const btnEnviar = document.querySelector("#btn-enviar");
     const btnNuevo = document.querySelector(".new-chat");
+    const input = document.querySelector("#input-texto");
 
     if (btnEnviar) {
       btnEnviar.onclick = () => this.enviarMensaje();
@@ -77,9 +80,18 @@ class ChatPage {
     if (btnNuevo) {
       btnNuevo.onclick = () => this.cargarChat(ChatService.nuevoChat());
     }
+
+    if (input) {
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          this.enviarMensaje();
+        }
+      });
+    }
   }
 
-  enviarMensaje() {
+  async enviarMensaje() {
     const input = document.querySelector("#input-texto");
     const texto = input.value.trim();
     if (!texto || !this.chatActivo) return;
@@ -87,7 +99,40 @@ class ChatPage {
     ChatService.agregarMensaje(this.chatActivo, "user", texto);
     this.cargarChat(this.chatActivo);
     input.value = "";
+
+    const chats = ChatService.cargarChats();
+    const chat = chats.find(c => c.id === this.chatActivo);
+    const historial = chat ? chat.mensajes
+      .filter(m => !m.texto.startsWith("📋"))   // excluir mensaje de caso clínico
+      .slice(0, -1)                              // excluir el último (que ya va como new_message)
+      .map(m => ({
+        role: m.rol === "user" ? "user" : "assistant",
+        content: m.texto
+      })) : [];
+
+    try {
+      const res = await fetch(`${ENV.API_BASE}/api/chat/message`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ history: historial, message: texto })
+      });
+
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+
+      const data = await res.json();
+      const respuesta = data.reply || "Sin respuesta";
+
+      ChatService.agregarMensaje(this.chatActivo, "ai", respuesta);
+      this.cargarChat(this.chatActivo);
+
+    } catch (err) {
+      console.error("Error al enviar mensaje:", err);
+      ChatService.agregarMensaje(this.chatActivo, "ai", "⚠️ Error al conectar con el servidor.");
+      this.cargarChat(this.chatActivo);
+    }
   }
+
 
   cargarChat(id) {
     this.chatActivo = id;
@@ -99,10 +144,14 @@ class ChatPage {
     area.innerHTML = "";
 
     chat.mensajes.forEach(msg => {
-      const p = document.createElement("p");
-      p.className = msg.rol === "user" ? "mensaje-user" : "mensaje-ai";
-      p.textContent = msg.texto;
-      area.appendChild(p);
+      const div = document.createElement("div");
+      div.className = msg.rol === "user" ? "mensaje-user" : "mensaje-ai";
+      if (msg.rol === "user") {
+        div.textContent = msg.texto;          // usuario: texto plano (seguro)
+      } else {
+        div.innerHTML = marked.parse(msg.texto);  // IA: renderizar markdown
+      }
+      area.appendChild(div);
     });
 
     this.mostrarHistorial();

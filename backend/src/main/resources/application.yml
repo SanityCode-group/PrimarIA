@@ -48,6 +48,9 @@ server:
         same-site: None
         secure: true
         http-only: true
+ai:
+  api:
+    base-url: http://cloud.riberadeltajo.es:11200
 
 # spring:
 
