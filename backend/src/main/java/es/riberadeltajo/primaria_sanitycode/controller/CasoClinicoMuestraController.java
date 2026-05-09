@@ -6,6 +6,8 @@ import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 import es.riberadeltajo.primaria_sanitycode.service.CasoClinicoMuestraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,15 +29,23 @@ public class CasoClinicoMuestraController {
 
     // Obtener caso clínico original aleatorio
     @GetMapping("/random") //endpoint para obtener un caso clínico aleatorio
-    public ResponseEntity<CasoClinicoOriginal> obtenerCasoClinicoAleatorio() {
+    public ResponseEntity<CasoClinicoOriginal> obtenerCasoClinicoAleatorio(
+            Authentication authentication
+    ) {
 
-        CasoClinicoMuestra muestra = casoClinicoMuestraService.obtenerCasoClinicoAleatorio();
-        
-        if(muestra == null || muestra.getCasoOriginal() == null){
+        //String email = authentication.getName();
+        //extraer email del principal OAuth2
+        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        String email = oauth2User.getAttribute("email");
+
+        CasoClinicoMuestra muestra =
+                casoClinicoMuestraService.obtenerCasoClinicoAleatorioPorEmail(email);
+
+        if (muestra == null || muestra.getCasoOriginal() == null) {
             return ResponseEntity.notFound().build();
         }
-        
-        return ResponseEntity.ok(muestra.getCasoOriginal()); //devolver el caso clínico original asociado a la muestra
+
+        return ResponseEntity.ok(muestra.getCasoOriginal());
     }
 
     // Preparar caso para VALIDAR

@@ -20,7 +20,7 @@ public class CasoClinicoOriginal {
     //id INT AUTO_INCREMENT PRIMARY KEY,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     //edad VARCHAR(50),
     @Column(name = "edad")
