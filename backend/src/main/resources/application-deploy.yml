@@ -56,3 +56,6 @@ logging:
   level:
     root: WARN
     es.riberadeltajo: INFO
+    
+server:
+  forward-headers-strategy: framework
