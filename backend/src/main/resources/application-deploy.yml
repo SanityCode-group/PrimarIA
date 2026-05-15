@@ -56,6 +56,14 @@ logging:
   level:
     root: WARN
     es.riberadeltajo: INFO
-    
+
 server:
+  address: 0.0.0.0
   forward-headers-strategy: framework
+  servlet:
+    session:
+      timeout: 20m
+      cookie:
+        same-site: None
+        secure: true
+        http-only: true
