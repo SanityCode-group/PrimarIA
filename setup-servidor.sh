@@ -2,7 +2,6 @@
 # setup-servidor.sh
 # Ejecutar UNA SOLA VEZ en el servidor para preparar todo
 # Uso: bash setup-servidor.sh
-
 set -e
 
 echo "=== Setup inicial PrimarIA ==="
@@ -12,10 +11,14 @@ if ! command -v git &> /dev/null; then
     apt update && apt install git -y
 fi
 
-# 2. Instalar docker compose plugin si falta
+# 2. Instalar docker compose v2 si falta
 if ! docker compose version &> /dev/null; then
-    apt update
-    apt install docker-compose-plugin -y
+    echo "Instalando Docker Compose v2..."
+    mkdir -p /usr/local/lib/docker/cli-plugins
+    curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 \
+        -o /usr/local/lib/docker/cli-plugins/docker-compose
+    chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+    echo "✅ Docker Compose $(docker compose version) instalado"
 fi
 
 # 3. Clonar el repositorio
@@ -37,10 +40,12 @@ DB_PASSWORD=SanityCodePass123!
 GOOGLE_CLIENTE_ID=TU_GOOGLE_CLIENTE_ID
 GOOGLE_CLIENTE_SECRETO=TU_GOOGLE_CLIENTE_SECRETO
 EOF
-    echo ".env creado."
+    echo ".env creado. ⚠️  Edita /opt/primaria/.env con los valores reales antes de continuar."
+    echo "Ejecuta: nano /opt/primaria/.env"
+    exit 0
 fi
 
-# 5. Conectar el contenedor mariadb existente a la red bridge por defecto
+# 5. Verificar contenedor mariadb
 echo "Verificando contenedor mariadb..."
 docker inspect mariadb > /dev/null 2>&1 && echo "✅ Contenedor mariadb encontrado" || echo "⚠️  Contenedor mariadb no encontrado"
 
