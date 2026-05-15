@@ -11,16 +11,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       GOOGLE_CLIENTE_ID: ${GOOGLE_CLIENTE_ID}
       GOOGLE_CLIENTE_SECRETO: ${GOOGLE_CLIENTE_SECRETO}
-    # Se conecta a la red del contenedor mariadb ya existente
     networks:
       - primaria_net
-      - mariadb_bridge
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
 
   frontend:
     build: ./frontend
@@ -37,10 +29,5 @@ services:
 
 networks:
   primaria_net:
-    driver: bridge
-
-  # Red donde ya existe el contenedor mariadb (creado con docker run sin red explícita)
-  # Docker lo pone por defecto en la red "bridge" — la conectamos aquí como external
-  mariadb_bridge:
     external: true
-    name: bridge
+    name: primaria_primaria_net
