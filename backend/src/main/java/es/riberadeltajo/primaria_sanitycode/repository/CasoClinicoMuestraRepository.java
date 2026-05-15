@@ -13,6 +13,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CasoClinicoMuestraRepository extends JpaRepository<CasoClinicoMuestra, Long> {
 
+    /*
+     * Devuelve un caso clínico de muestra que el usuario no haya validado 
+     * y que no haya sido validado por al menos 2 usuarios.
+    */
     @Query(value = """
         SELECT m.*
         FROM casos_clinicos_muestra m

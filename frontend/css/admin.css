@@ -1,0 +1,476 @@
+:root {
+  --blue-primary:  #4285f4;
+  --blue-dark:     #1266f1;
+  --blue-bg:       #f8fbff;
+  --white:         #ffffff;
+  --text-main:     #333333;
+  --text-muted:    #666666;
+  --border-color:  #e0e6ed;
+  --sidebar-w:     230px;
+  --header-h:      80px;
+  --danger:        #dc3545;
+  --success:       #28a745;
+  --warning:       #fbbc04;
+}
+
+/*  Layout  */
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  padding-top: var(--header-h);
+}
+
+/*  Sidebar  */
+
+.admin-sidebar {
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--border-color);
+  padding: 24px 0;
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.admin-sidebar-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 8px;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 10px;
+}
+
+.admin-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.18s;
+}
+
+.admin-nav a:hover {
+  background: var(--blue-bg);
+  color: var(--blue-primary);
+}
+
+.admin-nav a.active {
+  background: var(--blue-bg);
+  color: var(--blue-primary);
+  font-weight: 600;
+}
+
+.admin-nav a i {
+  width: 18px;
+  text-align: center;
+}
+
+/*  Main  */
+
+.admin-main {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  padding: 32px 40px;
+  background: #f5f7fa;
+  min-height: calc(100vh - var(--header-h));
+}
+
+.seccion {
+  animation: fadeIn 0.2s ease;
+}
+
+.seccion.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.seccion-header {
+  margin-bottom: 24px;
+}
+
+.seccion-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.seccion-header h1 i {
+  color: var(--blue-primary);
+}
+
+/*  Tabla  */
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  font-size: 0.9rem;
+}
+
+.admin-table thead {
+  background: var(--blue-bg);
+}
+
+.admin-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--blue-primary);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.admin-table tr:hover td {
+  background: #f9fbff;
+}
+
+/*  Badges  */
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-admin {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.badge-medico {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+/* Badge en el header */
+header .badge-admin {
+  background: #fff3cd;
+  color: #856404;
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-left: 4px;
+}
+
+/*  Subbarra admin en el header  */
+/* 
+.admin-bar {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 40px;
+  height: 40px;
+  border-bottom: 2px solid var(--blue-primary);
+}
+
+.admin-bar-label {
+  color: #aaa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-bar a {
+  color: #ccc;
+  text-decoration: none;
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.18s;
+}
+
+.admin-bar a:hover,
+.admin-bar a.active {
+  background: var(--blue-primary);
+  color: var(--white);
+}
+
+/* Cuando hay admin-bar el contenido baja 40px extra */
+/* body:has(.admin-bar) .admin-layout {
+  padding-top: calc(var(--header-h) + 40px);
+}
+
+body:has(.admin-bar) .admin-sidebar {
+  top: calc(var(--header-h) + 40px);
+}  */
+
+/*  Formulario whitelist  */
+
+.form-whitelist {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.form-whitelist input {
+  flex: 1;
+  max-width: 360px;
+  padding: 10px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-whitelist input:focus {
+  border-color: var(--blue-primary);
+}
+
+.btn-primary {
+  background: var(--blue-primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--blue-dark);
+}
+
+.btn-delete {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.btn-delete:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/*  Métricas / KPIs  */
+
+.metrica-bloque {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.metrica-bloque h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.metrica-bloque h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.kpi {
+  background: var(--blue-bg);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.kpi.destacado {
+  background: #fff8e1;
+  border: 1px solid var(--warning);
+}
+
+.kpi-valor {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--blue-primary);
+  line-height: 1;
+}
+
+.kpi.destacado .kpi-valor {
+  font-size: 1rem;
+  color: #856404;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Barras de criterios */
+.barras-criterios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.barra-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.barra-label {
+  width: 180px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.barra-track {
+  flex: 1;
+  background: #e9ecef;
+  border-radius: 6px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.barra-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-primary), #34a853);
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+
+.barra-valor {
+  width: 40px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/*  Estados  */
+
+.loading {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.error {
+  color: var(--danger);
+  padding: 12px 16px;
+  background: #fff0f0;
+  border-radius: 8px;
+  border-left: 3px solid var(--danger);
+}
+
+/*  Responsive  */
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    display: none;
+  }
+  .admin-main {
+    margin-left: 0;
+    padding: 20px 16px;
+  }
+  .admin-bar {
+    padding: 0 16px;
+    overflow-x: auto;
+  }
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+
+/*  Dashboard grid  */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Contenedor de altura fija para los canvas — FIX 3 */
+.chart-wrap {
+  position: relative;
+  height: 260px;   /* altura fija en desktop, no se desborda */
+  width: 100%;
+}
+
+.chart-wrap--radar {
+  height: 300px;   /* el radar necesita algo más de espacio por la leyenda */
+}
+
+.chart-wrap canvas {
+  max-height: 100%;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

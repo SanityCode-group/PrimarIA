@@ -1,0 +1,46 @@
+services:
+
+  backend:
+    build: ./backend
+    image: primaria_backend:latest
+    container_name: primaria_backend
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: deploy
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      GOOGLE_CLIENTE_ID: ${GOOGLE_CLIENTE_ID}
+      GOOGLE_CLIENTE_SECRETO: ${GOOGLE_CLIENTE_SECRETO}
+    # Se conecta a la red del contenedor mariadb ya existente
+    networks:
+      - primaria_net
+      - mariadb_bridge
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  frontend:
+    build: ./frontend
+    image: primaria_frontend:latest
+    container_name: primaria_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - primaria_net
+
+networks:
+  primaria_net:
+    driver: bridge
+
+  # Red donde ya existe el contenedor mariadb (creado con docker run sin red explícita)
+  # Docker lo pone por defecto en la red "bridge" — la conectamos aquí como external
+  mariadb_bridge:
+    external: true
+    name: bridge

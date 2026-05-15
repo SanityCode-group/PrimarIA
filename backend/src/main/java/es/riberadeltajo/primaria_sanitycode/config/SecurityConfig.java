@@ -49,7 +49,15 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/api/auth/user", "/index.html", "/css/**", "/js/**", "/oauth2/**", "/login/**", "/api/chat/**").permitAll()
+                .requestMatchers(
+                    "/", "/api/auth/user", "/index.html",
+                    "/css/**", "/js/**",
+                    "/oauth2/**", "/login/**",
+                    "/api/chat/**"
+                ).permitAll()
+                // Los endpoints de admin requieren autenticación;
+                // la comprobación de rol ADMIN la hace el propio AdminController
+                .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
@@ -67,20 +75,28 @@ public class SecurityConfig {
                     }
                 })
             );
-                // .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler))
-                // .logout(logout -> logout
-                //     .logoutSuccessUrl("/api/auth/user")
-                //     .invalidateHttpSession(true)
-                //     .deleteCookies("JSESSIONID")
-                //     .permitAll()
-                // )
-                // //corregir error redirección de CORS
-                // .exceptionHandling(e -> e
-                //     .authenticationEntryPoint((request, response, authException) -> {
-                //         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                //         response.getWriter().write("{\"error\": \"No autenticado. Por favor, inicia sesión con Google.\"}");
-                //     })
-                // );
+            
+        // http
+        //     .authorizeHttpRequests(auth -> auth
+        //         .requestMatchers("/", "/api/auth/user", "/index.html", "/css/**", "/js/**", "/oauth2/**", "/login/**", "/api/chat/**").permitAll()
+        //         .anyRequest().authenticated()
+        //     )
+        //     .oauth2Login(oauth2 -> oauth2
+        //         .successHandler(oAuth2SuccessHandler)
+        //         .failureUrl(frontendUrl + "/index.html?error=google")
+        //     )
+        //     .exceptionHandling(e -> e
+        //         .authenticationEntryPoint((request, response, authException) -> {
+        //             if (request.getRequestURI().startsWith("/api")) {
+        //                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        //                 response.setContentType("application/json");
+        //                 response.getWriter().write("{\"error\": \"Unauthorized\"}");
+        //             } else {
+        //                 response.sendRedirect(frontendUrl + "/index.html");
+        //             }
+        //         })
+        //     );
+                
 
         return http.build();
 

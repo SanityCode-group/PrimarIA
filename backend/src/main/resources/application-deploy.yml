@@ -1,14 +1,58 @@
 # SERVIDOR REAL CON DOMINIO Y HTTPS, PARA DESPLIEGUE EN PRODUCCIÓN
+# Perfil activo en producción (Docker)
 app:
   security:
     dev-mode: false
-  frontend-url: https://sanitycode.riberadeltajo.es  # sin /frontend si el frontend está en la raíz
+  frontend-url: https://sanitycode.riberadeltajo.es
 
 server:
+  address: 0.0.0.0
   servlet:
     session:
-      timeout: 10m
+      timeout: 20m
       cookie:
         same-site: None
-        secure: true      # HTTPS real
+        secure: true
         http-only: true
+
+spring:
+  datasource:
+    # "mariadb" es el nombre del contenedor ya existente en el servidor
+    url: jdbc:mariadb://mariadb:3306/primaria_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+    database-platform: org.hibernate.dialect.MariaDBDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "https://sanitycode.riberadeltajo.es/login/oauth2/code/google"
+            client-id: ${GOOGLE_CLIENTE_ID}
+            client-secret: ${GOOGLE_CLIENTE_SECRETO}
+            scope:
+              - email
+              - profile
+              - openid
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
+
+ai:
+  api:
+    base-url: http://cloud.riberadeltajo.es:11200
+
+logging:
+  level:
+    root: WARN
+    es.riberadeltajo: INFO

@@ -1,5 +1,6 @@
 package es.riberadeltajo.primaria_sanitycode.controller;
 
+import es.riberadeltajo.primaria_sanitycode.repository.UsuarioRepository;
 import es.riberadeltajo.primaria_sanitycode.service.OAuth2UserService;
 
 import java.util.HashMap;
@@ -19,6 +20,9 @@ public class AuthController {
     //Se importa el servicio de usuarios OAuth2UserService y sus dependencias
     @Autowired
     OAuth2UserService oAuth2UserService;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     //Redirige las conexiones de root ("/") a inicio ("/api/auth/user")
     @GetMapping("/")
@@ -55,7 +59,13 @@ public class AuthController {
         Map<String, String> usuario = new HashMap<>();
         usuario.put("nombre", principal.getAttribute("name"));
         usuario.put("email", principal.getAttribute("email"));
+        //usuario.put("rol", oAuth2UserService.getRolByEmail(principal.getAttribute("email")));
         usuario.put("foto",  principal.getAttribute("picture"));
+
+        // Buscar el rol en BD
+        String email = principal.getAttribute("email");
+        usuarioRepository.findByEmail(email).ifPresent(u -> usuario.put("rol", u.getRol()));
+
         return usuario;
     }
 

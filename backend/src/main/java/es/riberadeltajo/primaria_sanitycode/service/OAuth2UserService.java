@@ -72,4 +72,17 @@ public class OAuth2UserService {
 
     }
 
+    /**
+     * Metodo para obtener el rol del usuario a partir de su email, 
+     * se lee el json de cada usuario y se devuelve el rol, 
+     * si no se encuentra el email se devuelve "USER" por defecto
+     * @param email
+     * @return
+     */
+    public String getRolByEmail(String email) {
+
+
+        return "USER"; // Placeholder, replace with actual logic to read role from JSON
+
+    }
 }

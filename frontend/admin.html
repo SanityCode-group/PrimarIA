@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimarIA — Panel Admin</title>
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Chart.js para los gráficos del dashboard -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <app-header></app-header>
+  <script type="module" src="./js/components/AppHeader.js"></script>
+
+  <div class="admin-layout">
+
+    <!-- Sidebar de navegación admin -->
+    <aside class="admin-sidebar">
+      <h2 class="admin-sidebar-title"><i class="fas fa-shield-alt"></i> Panel Admin</h2>
+      <nav class="admin-nav">
+        <a href="#usuarios"  data-seccion="usuarios">
+          <i class="fas fa-users"></i> Usuarios
+        </a>
+        <a href="#whitelist" data-seccion="whitelist">
+          <i class="fas fa-list-check"></i> Whitelist
+        </a>
+        <a href="#metricas"  data-seccion="metricas">
+          <i class="fas fa-chart-bar"></i> Métricas IA
+        </a>
+        <a href="#dashboard" data-seccion="dashboard">
+          <i class="fas fa-chart-pie"></i> Dashboard
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+
+      <!-- USUARIOS -->
+      <section id="usuarios" class="seccion">
+        <div class="seccion-header">
+          <h1><i class="fas fa-users"></i> Usuarios registrados</h1>
+        </div>
+        <div id="tabla-usuarios"></div>
+      </section>
+
+      <!-- WHITELIST -->
+      <section id="whitelist" class="seccion hidden">
+        <div class="seccion-header">
+          <h1><i class="fas fa-list-check"></i> Whitelist de acceso</h1>
+        </div>
+
+        <form id="form-whitelist" class="form-whitelist">
+          <input
+            id="nuevo-email"
+            type="email"
+            placeholder="nuevo@medico.es"
+            required
+          >
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-plus"></i> Añadir email
+          </button>
+        </form>
+
+        <div id="tabla-whitelist"></div>
+      </section>
+
+      <!-- MÉTRICAS -->
+      <section id="metricas" class="seccion hidden">
+        <div class="seccion-header">
+          <h1><i class="fas fa-chart-bar"></i> Métricas de valoración IA</h1>
+        </div>
+        <div id="contenido-metricas"></div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="seccion hidden">
+        <div class="seccion-header">
+          <h1><i class="fas fa-chart-pie"></i> Dashboard gráfico</h1>
+        </div>
+        <div id="contenido-dashboard"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="./js/pages/admin.js"></script>
+</body>
+</html>

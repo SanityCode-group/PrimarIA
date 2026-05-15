@@ -27,11 +27,19 @@ public class ValidacionService {
 
     @Transactional
     public void guardarValidacion(ValidacionRequest request, String email) {
+
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         CasoClinicoOriginal caso = casoClinicoOriginalRepository.findById(request.getIdCasoOriginal())
                 .orElseThrow(() -> new RuntimeException("Caso clínico no encontrado"));
+
+        //comprobación de cuplicados antes de guardar valoración para reforzar seguridad en llamadas externas a la API
+        boolean yaValidado = validacionRepository
+                .existsByUsuarioAndCasoOriginal(usuario, caso);
+        if (yaValidado) {
+                throw new RuntimeException("Este médico ya ha validado este caso");
+        }
 
         Validacion validacion = Validacion.builder()
                 .usuario(usuario)

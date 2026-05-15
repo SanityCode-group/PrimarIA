@@ -50,6 +50,7 @@ Thumbs.db
 
 ### Variables de entorno y claves ###
 .env
+.env.example
 application-secret.yml
 
 ### Python / Entorno virtual ###
@@ -57,10 +58,15 @@ venv/
 */venv/
 dataset/venv/
 
+### Dataset (solo para desarrollo local) ###
+dataset/
+
 ### Datos de sesiónn de google, cachés, archivos de configuración local, etc. ###
 /data/
 /data/*
-*.json
+credentials.json
+token.json
+*_credentials.json
 
 
 
@@ -68,3 +74,4 @@ dataset/venv/
 *.csv
 *.pyc
 __pycache__/
+
