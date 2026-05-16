@@ -57,3 +57,5 @@ logging:
   level:
     root: WARN
     es.riberadeltajo: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
