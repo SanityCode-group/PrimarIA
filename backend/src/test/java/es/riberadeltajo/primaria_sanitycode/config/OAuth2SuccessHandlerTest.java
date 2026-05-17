@@ -31,6 +31,8 @@ public class OAuth2SuccessHandlerTest {
 
     @Test
     void testUsuarioNoWhitelist() throws Exception {
+        System.out.println("\n=== TEST: Whitelist no existe ===");
+
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -56,6 +58,7 @@ public class OAuth2SuccessHandlerTest {
     @Test
     void testWhitelistDenegado() throws Exception {
         System.out.println("\n=== TEST: Whitelist denegado ===");
+
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -73,12 +76,14 @@ public class OAuth2SuccessHandlerTest {
         handler.onAuthenticationSuccess(request, response, auth);
 
         verify(session).invalidate();
+
         System.out.println("✔ Sesión invalidada correctamente");
     }
 
     @Test
     void testUsuarioExistente() throws Exception {
         System.out.println("\n=== TEST: Usuario existente ===");
+
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -100,12 +105,14 @@ public class OAuth2SuccessHandlerTest {
         handler.onAuthenticationSuccess(request, response, auth);
 
         verify(usuarioRepository).save(any(Usuario.class));
+
         System.out.println("✔ Usuario actualizado correctamente");
     }
 
     @Test
     void testUsuarioNuevo() throws Exception {
         System.out.println("\n=== TEST: Usuario nuevo ===");
+
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -125,6 +132,7 @@ public class OAuth2SuccessHandlerTest {
         handler.onAuthenticationSuccess(request, response, auth);
 
         verify(usuarioRepository).save(any(Usuario.class));
+        
         System.out.println("✔ Usuario creado correctamente");
     }
 }

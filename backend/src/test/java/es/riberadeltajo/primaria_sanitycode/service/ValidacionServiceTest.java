@@ -46,6 +46,8 @@ public class ValidacionServiceTest {
 
         caso = new CasoClinicoOriginal();
         caso.setId(1L);
+
+        System.out.println("✔ SetUp correcto");
     }
 
     @Test

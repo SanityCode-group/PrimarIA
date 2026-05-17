@@ -21,6 +21,8 @@ class AdminControllerTest {
 
     @Test
     void accesoDenegadoUsuarioNormal() throws Exception {
+        System.out.println("\n=== TEST: Acceso denegado a usuario ===");
+
         mockMvc.perform(get("/api/admin/usuarios")
                 .with(user("user").roles("USER")))
                 .andExpect(status().isForbidden());
@@ -30,6 +32,8 @@ class AdminControllerTest {
 
     @Test
     void accesoPermitidoAdmin() throws Exception {
+        System.out.println("\n=== TEST: Acceso permitido a admin ===");
+
         mockMvc.perform(get("/api/admin/usuarios")
                 .with(oauth2Login().attributes(attrs -> {
                     attrs.put("email", "admin@test.com");

@@ -10,6 +10,7 @@ class SecurityTest {
 
     @Test
     void contextoCarga() {
+        System.out.println("\n=== TEST: Carga seguridad ===");
         System.out.println("✔ Seguridad cargada correctamente");
     }
 }

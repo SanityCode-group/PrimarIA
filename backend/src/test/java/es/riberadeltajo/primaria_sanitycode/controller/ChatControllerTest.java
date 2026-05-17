@@ -22,6 +22,7 @@ class ChatControllerTest {
 
     @Test
     void chatFunciona() throws Exception {
+        System.out.println("\n=== TEST: Chat funciona ===");
 
         String json = """
             {

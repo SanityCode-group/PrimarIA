@@ -47,6 +47,8 @@ public class MuestrasTest {
                 .id(1L)
                 .casoOriginal(original)
                 .build();
+        
+        System.out.println("✔ SetUp correcto");
     }
 
     @Test

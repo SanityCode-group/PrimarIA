@@ -20,6 +20,8 @@ class CasoClinicoControllerTest {
 
     @Test
     void sinLoginDebeFallar() throws Exception {
+        System.out.println("\n=== TEST: Sin login ===");
+
         mockMvc.perform(get("/api/casos/random"))
                 .andExpect(status().isUnauthorized());
 
@@ -28,6 +30,8 @@ class CasoClinicoControllerTest {
 
     @Test
     void conLoginDebeFuncionar() throws Exception {
+        System.out.println("\n=== TEST: Con login ===");
+
         mockMvc.perform(get("/api/casos/random")
         .with(oauth2Login()
                 .attributes(attrs -> attrs.put("email", "test@test.com"))))
