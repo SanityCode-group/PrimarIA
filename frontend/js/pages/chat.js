@@ -96,15 +96,31 @@ class ChatPage {
     const texto = input.value.trim();
     if (!texto || !this.chatActivo) return;
 
+    // Deshabilitar input mientras se procesa
+    input.disabled = true;
+    document.querySelector("#btn-enviar").disabled = true;
+
     ChatService.agregarMensaje(this.chatActivo, "user", texto);
     this.cargarChat(this.chatActivo);
     input.value = "";
 
+    // Mostrar burbuja "pensando..."
+    const area = document.querySelector("#area-chat");
+    const burbujaThinking = document.createElement("div");
+    burbujaThinking.className = "mensaje-ai mensaje-thinking";
+    burbujaThinking.innerHTML = `
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    `;
+    area.appendChild(burbujaThinking);
+    area.scrollTop = area.scrollHeight;
+
     const chats = ChatService.cargarChats();
     const chat = chats.find(c => c.id === this.chatActivo);
     const historial = chat ? chat.mensajes
-      .filter(m => !m.texto.startsWith("📋"))   // excluir mensaje de caso clínico
-      .slice(0, -1)                              // excluir el último (que ya va como new_message)
+      .filter(m => !m.texto.startsWith("📋"))
+      .slice(0, -1)
       .map(m => ({
         role: m.rol === "user" ? "user" : "assistant",
         content: m.texto
@@ -112,10 +128,10 @@ class ChatPage {
 
     try {
       const res = await fetch(`${ENV.API_BASE}/api/chat/message`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ history: historial, message: texto })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ history: historial, message: texto })
       });
 
       if (!res.ok) throw new Error(`Error ${res.status}`);
@@ -123,16 +139,51 @@ class ChatPage {
       const data = await res.json();
       const respuesta = data.reply || "Sin respuesta";
 
+      // Guardar en historial
       ChatService.agregarMensaje(this.chatActivo, "ai", respuesta);
-      this.cargarChat(this.chatActivo);
+
+      // Quitar burbuja "pensando" y mostrar respuesta con efecto typewriter
+      burbujaThinking.remove();
+      await this.mostrarRespuestaAnimada(respuesta, area);
 
     } catch (err) {
       console.error("Error al enviar mensaje:", err);
+      burbujaThinking.remove();
       ChatService.agregarMensaje(this.chatActivo, "ai", "⚠️ Error al conectar con el servidor.");
       this.cargarChat(this.chatActivo);
+    } finally {
+      // Rehabilitar input
+      input.disabled = false;
+      document.querySelector("#btn-enviar").disabled = false;
+      input.focus();
     }
   }
 
+  async mostrarRespuestaAnimada(textoCompleto, area) {
+    const div = document.createElement("div");
+    div.className = "mensaje-ai";
+    area.appendChild(div);
+    area.scrollTop = area.scrollHeight;
+
+    // Dividir en palabras manteniendo espacios
+    const palabras = textoCompleto.split(/(\s+)/);
+    let textoAcumulado = "";
+
+    for (const trozo of palabras) {
+      textoAcumulado += trozo;
+      // Renderizar markdown sobre el texto acumulado hasta ahora
+      div.innerHTML = marked.parse(textoAcumulado);
+      area.scrollTop = area.scrollHeight;
+      // Velocidad: 30ms por trozo — ajusta este número si quieres más lento/rápido
+      await this.esperar(30);
+    }
+
+    this.mostrarHistorial();
+  }
+
+  esperar(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   cargarChat(id) {
     this.chatActivo = id;
@@ -147,9 +198,9 @@ class ChatPage {
       const div = document.createElement("div");
       div.className = msg.rol === "user" ? "mensaje-user" : "mensaje-ai";
       if (msg.rol === "user") {
-        div.textContent = msg.texto;          // usuario: texto plano (seguro)
+        div.textContent = msg.texto;
       } else {
-        div.innerHTML = marked.parse(msg.texto);  // IA: renderizar markdown
+        div.innerHTML = marked.parse(msg.texto);
       }
       area.appendChild(div);
     });

@@ -252,3 +252,51 @@ body {
   background: none;
   padding: 0;
 }
+
+
+
+
+/* ======= INDICADOR "PENSANDO" ======= */
+.mensaje-thinking {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 24px;
+  min-width: 64px;
+}
+
+.mensaje-thinking .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-primary);
+  opacity: 0.4;
+  animation: thinking-bounce 1.2s infinite ease-in-out;
+}
+
+.mensaje-thinking .dot:nth-child(1) { animation-delay: 0s; }
+.mensaje-thinking .dot:nth-child(2) { animation-delay: 0.2s; }
+.mensaje-thinking .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes thinking-bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* Input deshabilitado mientras espera respuesta */
+.chat-input textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--text-muted);
+}
