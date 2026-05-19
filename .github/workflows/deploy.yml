@@ -1,0 +1,41 @@
+name: Deploy PrimarIA a producción
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build y despliegue en servidor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Desplegar en servidor vía SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: sanitycode.riberadeltajo.es
+          port: 11307
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+
+            # Ir al directorio del proyecto
+            cd /opt/primaria
+
+            # Actualizar código desde GitHub
+            git pull origin main
+
+            # Reconstruir y reiniciar contenedores
+            # --build fuerza rebuild de las imágenes
+            # --no-deps evita tocar la mariadb externa
+            docker compose up --build -d --remove-orphans
+
+            # Limpiar imágenes antiguas (ahorra espacio en disco)
+            docker image prune -f
+
+            echo "Despliegue completado"
