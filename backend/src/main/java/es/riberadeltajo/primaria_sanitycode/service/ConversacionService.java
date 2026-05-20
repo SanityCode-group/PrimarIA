@@ -35,7 +35,13 @@ public class ConversacionService {
         int orden = mensajes.size();
 
         MensajeConversacion m = new MensajeConversacion();
-        m.setConversacion(conversacionRepo.findById(idConversacion).orElseThrow());
+        
+        var conversacion = conversacionRepo.findById(idConversacion);
+        if (conversacion.isEmpty()) {
+            throw new RuntimeException("Conversación no existe: " + idConversacion);
+        }
+
+        m.setConversacion(conversacion.get());
         m.setRole(MensajeConversacion.Role.valueOf(role));
         m.setContent(content);
         m.setOrden(orden);
