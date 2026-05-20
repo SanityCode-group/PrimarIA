@@ -8,7 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import es.riberadeltajo.primaria_sanitycode.model.entity.Conversacion;
+import es.riberadeltajo.primaria_sanitycode.repository.ConversacionRepository;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,19 +22,25 @@ class ChatControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ConversacionRepository conversacionRepo;
+
     @Test
     void chatFunciona() throws Exception {
         System.out.println("\n=== TEST: Chat funciona ===");
 
+        Conversacion c = new Conversacion();
+        c.setFechaCreacion(java.time.LocalDateTime.now());
+        c.setIdUsuario(1L);
+        c = conversacionRepo.save(c);
+
         String json = """
             {
-                "history": [],
                 "message": "Hola"
             }
         """;
 
-        mockMvc.perform(post("/api/chat/message")
-                .with(user("user").roles("USER"))
+        mockMvc.perform(post("/api/chat/" + c.getId() + "/message")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isOk());
