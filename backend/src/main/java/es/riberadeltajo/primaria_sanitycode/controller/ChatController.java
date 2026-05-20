@@ -4,9 +4,13 @@ import es.riberadeltajo.primaria_sanitycode.model.dto.ChatMessage;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatRequest;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatResponse;
 import es.riberadeltajo.primaria_sanitycode.model.entity.Conversacion;
+import es.riberadeltajo.primaria_sanitycode.model.entity.Usuario;
 import es.riberadeltajo.primaria_sanitycode.repository.ConversacionRepository;
+import es.riberadeltajo.primaria_sanitycode.repository.UsuarioRepository;
 import es.riberadeltajo.primaria_sanitycode.service.AiChatService;
 import es.riberadeltajo.primaria_sanitycode.service.ConversacionService;
+import org.springframework.security.core.Authentication;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +22,30 @@ public class ChatController {
     private final AiChatService aiChatService;
     private final ConversacionService conversacionService;
     private final ConversacionRepository conversacionRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public ChatController(AiChatService aiChatService, ConversacionService conversacionService, ConversacionRepository conversacionRepo) {
+    public ChatController(AiChatService aiChatService, 
+                          ConversacionService conversacionService, 
+                          ConversacionRepository conversacionRepo, 
+                          UsuarioRepository usuarioRepo) {
         this.aiChatService = aiChatService;
         this.conversacionService = conversacionService;
         this.conversacionRepo = conversacionRepo;
+        this.usuarioRepo = usuarioRepo;
     }
 
     @PostMapping
-    public Long crearConversacion() {
+    public Long crearConversacion(Authentication auth) {
+        String email = auth.getName(); // 🔥 SIEMPRE funciona
+
+        Usuario usuario = usuarioRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
         Conversacion c = new Conversacion();
+        c.setIdUsuario(usuario.getId());
+        c.setFechaCreacion(LocalDateTime.now());
+
         conversacionRepo.save(c);
+
         return c.getId();
     }
 
