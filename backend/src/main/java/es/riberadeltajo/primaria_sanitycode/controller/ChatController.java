@@ -3,6 +3,8 @@ package es.riberadeltajo.primaria_sanitycode.controller;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatMessage;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatRequest;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatResponse;
+import es.riberadeltajo.primaria_sanitycode.model.entity.Conversacion;
+import es.riberadeltajo.primaria_sanitycode.repository.ConversacionRepository;
 import es.riberadeltajo.primaria_sanitycode.service.AiChatService;
 import es.riberadeltajo.primaria_sanitycode.service.ConversacionService;
 import java.util.List;
@@ -13,13 +15,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/chat")
 @CrossOrigin(origins = "*") // Ajusta al origen de tu frontend en producción
 public class ChatController {
-
     private final AiChatService aiChatService;
     private final ConversacionService conversacionService;
+    private final ConversacionRepository conversacionRepo;
 
-    public ChatController(AiChatService aiChatService, ConversacionService conversacionService) {
+    public ChatController(AiChatService aiChatService, ConversacionService conversacionService, ConversacionRepository conversacionRepo) {
         this.aiChatService = aiChatService;
         this.conversacionService = conversacionService;
+        this.conversacionRepo = conversacionRepo;
+    }
+
+    @PostMapping
+    public Long crearConversacion() {
+        Conversacion c = new Conversacion();
+        conversacionRepo.save(c);
+        return c.getId();
     }
 
     @PostMapping("/{idConversacion}/message")

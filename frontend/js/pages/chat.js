@@ -9,26 +9,26 @@ class ChatService {
     localStorage.setItem("mis_chats", JSON.stringify(chats));
   }
 
-  static nuevoChat() {
+  static async nuevoChat() {
+    const res = await fetch(`${ENV.API_BASE}/api/chat`, {
+      method: "POST"
+    });
+
+    const id = await res.json();
+
     const chats = this.cargarChats();
+
     const nuevo = {
-      id: Date.now(),
+      id: id, 
       titulo: "Nuevo chat",
       mensajes: [],
       validado: false
     };
 
-    const caso = JSON.parse(localStorage.getItem("caso_clinico_activo"));
-    if (caso) {
-      nuevo.mensajes.push({
-        rol: "ai",
-        texto: `📋 Caso clínico cargado: Paciente de ${caso.edad} años. Motivo: ${caso.motivo}`
-      });
-    }
-
     chats.push(nuevo);
     this.guardarChats(chats);
-    return nuevo.id;
+
+    return id;
   }
 
   static eliminarChat(id) {
@@ -58,11 +58,14 @@ class ChatPage {
     this.init();
   }
 
-  init() {
+  async init() {
     this.setupEventListeners();
+
     const chats = ChatService.cargarChats();
+
     if (chats.length === 0) {
-      this.cargarChat(ChatService.nuevoChat());
+      const id = await ChatService.nuevoChat();
+      this.cargarChat(id);
     } else {
       this.cargarChat(chats[0].id);
     }
@@ -77,9 +80,10 @@ class ChatPage {
       btnEnviar.onclick = () => this.enviarMensaje();
     }
 
-    if (btnNuevo) {
-      btnNuevo.onclick = () => this.cargarChat(ChatService.nuevoChat());
-    }
+    btnNuevo.onclick = async () => {
+      const id = await ChatService.nuevoChat();
+      this.cargarChat(id);
+    };
 
     if (input) {
       input.addEventListener("keydown", (e) => {
@@ -131,7 +135,7 @@ class ChatPage {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ history: historial, message: texto })
+          body: JSON.stringify({ message: texto })
       });
 
       if (!res.ok) throw new Error(`Error ${res.status}`);
