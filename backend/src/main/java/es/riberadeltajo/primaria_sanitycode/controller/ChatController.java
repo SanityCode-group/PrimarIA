@@ -10,6 +10,8 @@ import es.riberadeltajo.primaria_sanitycode.repository.UsuarioRepository;
 import es.riberadeltajo.primaria_sanitycode.service.AiChatService;
 import es.riberadeltajo.primaria_sanitycode.service.ConversacionService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +38,14 @@ public class ChatController {
 
     @PostMapping
     public Long crearConversacion(Authentication auth) {
-        String email = auth.getName(); // 🔥 SIEMPRE funciona
+        if (auth == null) {
+            throw new RuntimeException("No autenticado");
+        }
+        
+        OAuth2User user = (OAuth2User) auth.getPrincipal();
+        String email = user.getAttribute("email");
 
-        Usuario usuario = usuarioRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario no existe"));
 
         Conversacion c = new Conversacion();
         c.setIdUsuario(usuario.getId());
