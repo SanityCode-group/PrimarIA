@@ -12,7 +12,7 @@ class ChatService {
   static nuevoChat() {
     const chats = this.cargarChats();
     const nuevo = {
-      id: "chat_" + Date.now(),
+      id: Date.now(),
       titulo: "Nuevo chat",
       mensajes: [],
       validado: false
