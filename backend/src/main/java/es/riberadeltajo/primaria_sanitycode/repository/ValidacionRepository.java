@@ -128,4 +128,7 @@ public interface ValidacionRepository extends JpaRepository<Validacion, Long> {
     /** Total de casos ya validados (con al menos una validación) */
     @Query("SELECT COUNT(DISTINCT v.casoOriginal.id) FROM Validacion v")
     long totalCasosValidados();
+
+    /** Buscar validaciones por ID de caso */
+    List<Validacion> findByCasoOriginalId(Long casoId);
 }

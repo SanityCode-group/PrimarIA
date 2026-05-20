@@ -2,8 +2,10 @@ package es.riberadeltajo.primaria_sanitycode.controller;
 
 import es.riberadeltajo.primaria_sanitycode.model.dto.CasoPuntuadoDTO;
 import es.riberadeltajo.primaria_sanitycode.model.dto.MetricaAgenteDTO;
+import es.riberadeltajo.primaria_sanitycode.model.entity.CasoClinicoOriginal;
 import es.riberadeltajo.primaria_sanitycode.model.entity.Usuario;
 import es.riberadeltajo.primaria_sanitycode.model.entity.Whitelist;
+import es.riberadeltajo.primaria_sanitycode.repository.CasoClinicoOriginalRepository;
 import es.riberadeltajo.primaria_sanitycode.repository.UsuarioRepository;
 import es.riberadeltajo.primaria_sanitycode.repository.ValidacionRepository;
 import es.riberadeltajo.primaria_sanitycode.repository.WhitelistRepository;
@@ -22,14 +24,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    @Autowired private ValidacionRepository  validacionRepository;
-    @Autowired private UsuarioRepository     usuarioRepository;
-    @Autowired private WhitelistRepository   whitelistRepository;
-
-    //  Guard helper 
+    @Autowired
+    private ValidacionRepository validacionRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private WhitelistRepository whitelistRepository;
+    @Autowired
+    private CasoClinicoOriginalRepository casoRepository;
+    // Guard helper
 
     private boolean esAdmin(OAuth2User principal) {
-        if (principal == null) return false;
+        if (principal == null)
+            return false;
         String email = principal.getAttribute("email");
         return usuarioRepository.findByEmail(email)
                 .map(u -> "ADMIN".equalsIgnoreCase(u.getRol()))
@@ -40,29 +47,31 @@ public class AdminController {
         return ResponseEntity.status(403).body("Acceso restringido a administradores");
     }
 
-    //  USUARIOS 
+    // USUARIOS
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> listarUsuarios(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         List<Usuario> usuarios = usuarioRepository.findAllByOrderByFechaCreacionDesc();
         return ResponseEntity.ok(usuarios.stream().map(u -> {
             Map<String, Object> m = new LinkedHashMap<>();
-            m.put("id",            u.getId());
-            m.put("nombre",        u.getNombre());
-            m.put("email",         u.getEmail());
-            m.put("rol",           u.getRol());
+            m.put("id", u.getId());
+            m.put("nombre", u.getNombre());
+            m.put("email", u.getEmail());
+            m.put("rol", u.getRol());
             m.put("fechaCreacion", u.getFechaCreacion());
-            m.put("ultimoAcceso",  u.getUltimoAcceso());
+            m.put("ultimoAcceso", u.getUltimoAcceso());
             return m;
         }).collect(Collectors.toList()));
     }
 
-    //  WHITELIST 
+    // WHITELIST
 
     @GetMapping("/whitelist")
     public ResponseEntity<?> listarWhitelist(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         return ResponseEntity.ok(whitelistRepository.findAll());
     }
 
@@ -70,7 +79,8 @@ public class AdminController {
     public ResponseEntity<?> añadirWhitelist(
             @RequestBody Map<String, String> body,
             @AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
 
         String email = body.get("email");
         if (email == null || email.isBlank())
@@ -90,7 +100,8 @@ public class AdminController {
     public ResponseEntity<?> eliminarWhitelist(
             @PathVariable Long id,
             @AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
 
         if (!whitelistRepository.existsById(id))
             return ResponseEntity.notFound().build();
@@ -99,26 +110,27 @@ public class AdminController {
         return ResponseEntity.ok("Email eliminado de la whitelist");
     }
 
-    //  MÉTRICAS 
+    // MÉTRICAS
 
     /** Resumen global: total validaciones, casos validados */
     @GetMapping("/metricas/resumen")
     public ResponseEntity<?> resumenGlobal(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
 
         Object[] media = validacionRepository.mediaGlobalCriterios();
 
         Map<String, Object> res = new LinkedHashMap<>();
-        res.put("totalValidaciones",  validacionRepository.totalValidaciones());
+        res.put("totalValidaciones", validacionRepository.totalValidaciones());
         res.put("totalCasosValidados", validacionRepository.totalCasosValidados());
-        res.put("totalUsuarios",      usuarioRepository.count());
+        res.put("totalUsuarios", usuarioRepository.count());
 
         if (media != null && media.length == 5) {
             Map<String, Double> criterios = new LinkedHashMap<>();
-            String[] nombres = {"precisionDiagnostica","claridadTextual",
-                                "relevanciaClinica","adecuacionContextual","nivelTecnico"};
+            String[] nombres = { "precisionDiagnostica", "claridadTextual",
+                    "relevanciaClinica", "adecuacionContextual", "nivelTecnico" };
             for (int i = 0; i < 5; i++) {
-                double v = media[i] != null ? Math.round(((Number)media[i]).doubleValue()*100)/100.0 : 0.0;
+                double v = media[i] != null ? Math.round(((Number) media[i]).doubleValue() * 100) / 100.0 : 0.0;
                 criterios.put(nombres[i], v);
             }
             res.put("mediaGlobalCriterios", criterios);
@@ -137,7 +149,8 @@ public class AdminController {
     /** Métricas agrupadas por modelo de IA */
     @GetMapping("/metricas/por-agente")
     public ResponseEntity<?> metricasPorAgente(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         List<MetricaAgenteDTO> result = validacionRepository.metricasPorAgente()
                 .stream().map(MetricaAgenteDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
@@ -146,7 +159,8 @@ public class AdminController {
     /** Top 10 casos mejor valorados */
     @GetMapping("/metricas/top-casos")
     public ResponseEntity<?> topCasos(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         List<CasoPuntuadoDTO> result = validacionRepository.top10CasosPorPuntuacion()
                 .stream().map(CasoPuntuadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
@@ -155,7 +169,8 @@ public class AdminController {
     /** Casos con puntuación perfecta en precisión diagnóstica */
     @GetMapping("/metricas/perfectos/precision")
     public ResponseEntity<?> perfectosPrecision(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         List<CasoPuntuadoDTO> result = validacionRepository.casosPerfectosPrecision()
                 .stream().map(CasoPuntuadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
@@ -164,9 +179,87 @@ public class AdminController {
     /** Casos con puntuación perfecta en claridad textual */
     @GetMapping("/metricas/perfectos/claridad")
     public ResponseEntity<?> perfectosClaridad(@AuthenticationPrincipal OAuth2User principal) {
-        if (!esAdmin(principal)) return forbidden();
+        if (!esAdmin(principal))
+            return forbidden();
         List<CasoPuntuadoDTO> result = validacionRepository.casosPerfectosClaridad()
                 .stream().map(CasoPuntuadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
+    }
+
+    /** Detalle completo de un caso + validaciones */
+    @GetMapping("/casos/{id}")
+    public ResponseEntity<?> detalleCaso(
+            @PathVariable Long id,
+            @AuthenticationPrincipal OAuth2User principal) {
+
+        if (!esAdmin(principal))
+            return forbidden();
+
+        Optional<CasoClinicoOriginal> casoOpt = casoRepository.findById(id);
+
+        if (casoOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CasoClinicoOriginal caso = casoOpt.get();
+
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        // DATOS DEL CASO
+        response.put("id", caso.getId());
+        response.put("categoria", caso.getCategoria());
+        response.put("agente", caso.getAgente());
+        response.put("edad", caso.getEdad());
+        response.put("sexo", caso.getSexo());
+        response.put("motivo", caso.getMotivo());
+        response.put("sintomas", caso.getSintomas());
+        response.put("exploracion_general", caso.getExploracion_general());
+        response.put("signos", caso.getSignos());
+        response.put("resultados_pruebas", caso.getResultados_pruebas());
+        response.put("razonamiento_clinico", caso.getRazonamiento_clinico());
+        response.put("diagnostico_final", caso.getDiagnostico_final());
+        response.put("tratamiento_farmacologico", caso.getTratamiento_farmacologico());
+        response.put("tratamiento_no_farmacologico", caso.getTratamiento_no_farmacologico());
+        response.put("antecedentes_medicos", caso.getAntecedentes_medicos());
+        response.put("antecedentes_quirurgicos", caso.getAntecedentes_quirurgicos());
+        response.put("antecedentes_familiares", caso.getAntecedentes_familiares());
+        response.put("medicacion_actual", caso.getMedicacion_actual());
+        response.put("habitos", caso.getHabitos());
+        response.put("situacion_basal", caso.getSituacion_basal());
+        response.put("factores_sociales", caso.getFactores_sociales());
+        response.put("alergias", caso.getAlergias());
+        response.put("keywords", caso.getKeywords());
+        response.put("codigo_cie10", caso.getCodigo_cie_10());
+        response.put("dificultad", caso.getDificultad());
+        response.put("referencias_bibliograficas", caso.getReferencias_bibliograficas());
+
+        // VALIDACIONES
+        List<Map<String, Object>> validaciones = validacionRepository.findByCasoOriginalId(caso.getId())
+                .stream()
+                .map(v -> {
+
+                    Map<String, Object> val = new LinkedHashMap<>();
+
+                    val.put("id", v.getId());
+                    val.put("precisionDiagnostica", v.getPrecisionDiagnostica());
+                    val.put("claridadTextual", v.getClaridadTextual());
+                    val.put("relevanciaClinica", v.getRelevanciaClinica());
+                    val.put("adecuacionContextual", v.getAdecuacionContextual());
+                    val.put("nivelTecnico", v.getNivelTecnico());
+                    val.put("observaciones", v.getObservaciones());
+                    val.put("fechaValidacion", v.getFechaValidacion());
+
+                    if (v.getUsuario() != null) {
+                        val.put("usuario", v.getUsuario().getNombre());
+                        val.put("email", v.getUsuario().getEmail());
+                    }
+
+                    return val;
+                })
+                .collect(Collectors.toList());
+
+        response.put("validaciones", validaciones);
+
+        return ResponseEntity.ok(response);
     }
 }

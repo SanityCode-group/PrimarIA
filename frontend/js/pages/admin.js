@@ -45,9 +45,9 @@ class AdminPage {
       s.classList.toggle('hidden', s.id !== seccion);
     });
     const loaders = {
-      usuarios:  () => this.cargarUsuarios(),
+      usuarios: () => this.cargarUsuarios(),
       whitelist: () => this.cargarWhitelist(),
-      metricas:  () => this.cargarMetricas(),
+      metricas: () => this.cargarMetricas(),
       dashboard: () => this.cargarDashboard(),
     };
     loaders[seccion]?.();
@@ -150,6 +150,7 @@ class AdminPage {
   async cargarMetricas() {
     const cont = document.getElementById('contenido-metricas');
     cont.innerHTML = '<p class="loading">Cargando métricas...</p>';
+
     try {
       const [resumen, porAgente, topCasos, perfectosPrecision, perfectosClaridad] =
         await Promise.all([
@@ -167,6 +168,10 @@ class AdminPage {
         ${this.htmlCasosPerfectos('Casos con precisión diagnóstica perfecta (5/5)', perfectosPrecision)}
         ${this.htmlCasosPerfectos('Casos con claridad textual perfecta (5/5)', perfectosClaridad)}
       `;
+
+      //hacer clicables las filas de las tablas para ver detalles del caso
+      this.activarClicksCasos();
+
     } catch (e) {
       cont.innerHTML = `<p class="error">Error al cargar métricas: ${e.message}</p>`;
     }
@@ -177,10 +182,10 @@ class AdminPage {
     const criterios = r.mediaGlobalCriterios || {};
     const nombres = {
       precisionDiagnostica: 'Precisión diagnóstica',
-      claridadTextual:      'Claridad textual',
-      relevanciaClinica:    'Relevancia clínica',
+      claridadTextual: 'Claridad textual',
+      relevanciaClinica: 'Relevancia clínica',
       adecuacionContextual: 'Adecuación contextual',
-      nivelTecnico:         'Nivel técnico',
+      nivelTecnico: 'Nivel técnico',
     };
     const mejorLabel = nombres[r.mejorCriterio] || r.mejorCriterio;
 
@@ -191,7 +196,6 @@ class AdminPage {
           <div class="kpi"><span class="kpi-valor">${r.totalValidaciones}</span><span class="kpi-label">Validaciones</span></div>
           <div class="kpi"><span class="kpi-valor">${r.totalCasosValidados}</span><span class="kpi-label">Casos validados</span></div>
           <div class="kpi"><span class="kpi-valor">${r.totalUsuarios}</span><span class="kpi-label">Usuarios</span></div>
-          <div class="kpi destacado"><span class="kpi-valor">🏆 ${mejorLabel}</span><span class="kpi-label">Criterio mejor valorado</span></div>
         </div>
         <h3 style="margin:20px 0 10px">Media global por criterio</h3>
         <div class="barras-criterios">
@@ -199,7 +203,7 @@ class AdminPage {
             <div class="barra-item">
               <span class="barra-label">${nombres[k] || k}</span>
               <div class="barra-track">
-                <div class="barra-fill" style="width:${(v/5)*100}%"></div>
+                <div class="barra-fill" style="width:${(v / 5) * 100}%"></div>
               </div>
               <span class="barra-valor">${v}/5</span>
             </div>`).join('')}
@@ -259,19 +263,28 @@ class AdminPage {
     return `
       <table class="admin-table">
         <thead>
-          <tr><th>ID caso</th><th>Modelo IA</th><th>Categoría</th><th>Diagnóstico</th><th>Puntuación</th></tr>
+          <tr>
+            <th>ID</th>
+            <th>Agente IA</th>
+            <th>Categoría</th>
+            <th>Diagnóstico</th>
+            <th>Puntuación</th>
+          </tr>
         </thead>
+
         <tbody>
           ${casos.map(c => `
-            <tr>
+            <tr class="fila-caso" data-id="${c.idCaso}">
               <td>${c.idCaso}</td>
               <td>${c.agente || '-'}</td>
               <td>${c.categoria || '-'}</td>
-              <td>${this.truncar(c.diagnostico, 60)}</td>
+              <td>${this.truncar(c.diagnostico, 70)}</td>
               <td><strong>${c.puntuacion}</strong></td>
-            </tr>`).join('')}
+            </tr>
+          `).join('')}
         </tbody>
-      </table>`;
+      </table>
+    `;
   }
 
   //  DASHBOARD (gráficas) 
@@ -336,7 +349,7 @@ class AdminPage {
 
   dibujarRadarCriterios(agentes) {
     const ctx = document.getElementById('chart-criterios').getContext('2d');
-    const colores = ['#4285f4','#ea4335','#fbbc04','#34a853','#9c27b0','#ff6d00'];
+    const colores = ['#4285f4', '#ea4335', '#fbbc04', '#34a853', '#9c27b0', '#ff6d00'];
     new Chart(ctx, {
       type: 'radar',
       data: {
@@ -389,6 +402,245 @@ class AdminPage {
   truncar(str, max) {
     if (!str) return '-';
     return str.length > max ? str.substring(0, max) + '…' : str;
+  }
+
+  // CLICKS EN FILAS DE CASOS PARA VER DETALLES
+  activarClicksCasos() {
+    document.querySelectorAll('.fila-caso').forEach(fila => {
+      fila.addEventListener('click', async () => {
+        const id = fila.dataset.id;
+        await this.mostrarDetalleCaso(id);
+      });
+    });
+  }
+
+  async mostrarDetalleCaso(id) {
+    try {
+      const caso = await apiService.getCasoDetalle(id);
+      const modal = document.createElement('div');
+      modal.className = 'modal-caso';
+
+      modal.innerHTML = `
+        <div class="modal-caso-contenido">
+          
+          <button class="cerrar-modal">✕</button>
+
+          <div class="modal-header-caso">
+            <div>
+              <h2>Caso #${caso.id}</h2>
+              <p class="modal-subtitle">
+                ${caso.categoria || '-'}
+              </p>
+            </div>
+
+            <div class="badge-modal">
+              ${caso.agente || 'IA'}
+            </div>
+          </div>
+
+          <!-- DATOS PACIENTE -->
+          <section class="detalle-card">
+            <h3>🩺 Datos del paciente</h3>
+
+            <div class="detalle-grid">
+              <div>
+                <strong>Edad</strong>
+                <p>${caso.edad || '-'}</p>
+              </div>
+
+              <div>
+                <strong>Sexo</strong>
+                <p>${caso.sexo || '-'}</p>
+              </div>
+
+              <div>
+                <strong>Alergias</strong>
+                <p>${caso.alergias || '-'}</p>
+              </div>
+
+              <div>
+                <strong>Situación basal</strong>
+                <p>${caso.situacion_basal || '-'}</p>
+              </div>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Factores sociales</strong>
+              <p>${caso.factores_sociales || '-'}</p>
+            </div>
+          </section>
+
+          <!-- ANTECEDENTES -->
+          <section class="detalle-card">
+            <h3>📚 Antecedentes</h3>
+
+            <div class="bloque-texto">
+              <strong>Antecedentes médicos</strong>
+              <p>${caso.antecedentes_medicos || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Antecedentes quirúrgicos</strong>
+              <p>${caso.antecedentes_quirurgicos || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Antecedentes familiares</strong>
+              <p>${caso.antecedentes_familiares || '-'}</p>
+            </div>
+          </section>
+
+          <!-- SITUACIÓN CLÍNICA -->
+          <section class="detalle-card">
+            <h3>🧬 Situación clínica</h3>
+
+            <div class="bloque-texto">
+              <strong>Hábitos</strong>
+              <p>${caso.habitos || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Medicación actual</strong>
+              <p>${caso.medicacion_actual || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Motivo de consulta</strong>
+              <p>${caso.motivo || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Síntomas</strong>
+              <p>${caso.sintomas || '-'}</p>
+            </div>
+          </section>
+
+          <!-- EXPLORACIÓN -->
+          <section class="detalle-card">
+            <h3>🔍 Exploración y pruebas</h3>
+
+            <div class="bloque-texto">
+              <strong>Exploración general</strong>
+              <p>${caso.exploracion_general || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Signos</strong>
+              <p>${caso.signos || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Resultados de pruebas</strong>
+              <p>${caso.resultados_pruebas || '-'}</p>
+            </div>
+          </section>
+
+          <!-- JUICIO CLÍNICO -->
+          <section class="detalle-card">
+            <h3>🧠 Juicio clínico</h3>
+
+            <div class="bloque-texto">
+              <strong>Razonamiento clínico</strong>
+              <p>${caso.razonamiento_clinico || '-'}</p>
+            </div>
+
+            <div class="bloque-texto diagnostico-final">
+              <strong>Diagnóstico final</strong>
+              <p>${caso.diagnostico_final || '-'}</p>
+            </div>
+          </section>
+
+          <!-- TRATAMIENTO -->
+          <section class="detalle-card">
+            <h3>💊 Tratamiento</h3>
+
+            <div class="bloque-texto">
+              <strong>Tratamiento farmacológico</strong>
+              <p>${caso.tratamiento_farmacologico || '-'}</p>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Tratamiento no farmacológico</strong>
+              <p>${caso.tratamiento_no_farmacologico || '-'}</p>
+            </div>
+          </section>
+
+          <!-- INFO EXTRA -->
+          <section class="detalle-card">
+            <h3>📖 Información adicional</h3>
+
+            <div class="detalle-grid">
+              <div>
+                <strong>Categoría</strong>
+                <p>${caso.categoria || '-'}</p>
+              </div>
+
+              <div>
+                <strong>Código CIE-10</strong>
+                <p>${caso.codigo_cie10 || '-'}</p>
+              </div>
+
+              <div>
+                <strong>Keywords</strong>
+                <p>${caso.keywords || '-'}</p>
+              </div>
+            </div>
+
+            <div class="bloque-texto">
+              <strong>Referencias bibliográficas</strong>
+              <p>${caso.referencias_bibliograficas || '-'}</p>
+            </div>
+          </section>
+
+          <!-- VALIDACIONES -->
+          <section class="detalle-card">
+            <h3>Validaciones</h3>
+
+            ${caso.validaciones?.length
+          ? caso.validaciones.map(v => `
+                <div class="validacion-card">
+                  <div class="validacion-header">
+                    <strong>${v.usuario || 'Usuario'}</strong>
+                    <span>${new Date(v.fechaValidacion).toLocaleString()}</span>
+                  </div>
+
+                  <div class="validacion-grid">
+                    <div>Precisión: ⭐ ${v.precisionDiagnostica}</div>
+                    <div>Claridad: ⭐ ${v.claridadTextual}</div>
+                    <div>Relevancia: ⭐ ${v.relevanciaClinica}</div>
+                    <div>Adecuación: ⭐ ${v.adecuacionContextual}</div>
+                    <div>Nivel técnico: ⭐ ${v.nivelTecnico}</div>
+                  </div>
+
+                  <div class="bloque-texto">
+                    ${v.observaciones || 'Sin observaciones'}
+                  </div>
+                </div>
+              `).join('')
+          : '<p>No hay validaciones.</p>'
+        }
+          </section>
+
+        </div>
+      `;
+
+
+      document.body.appendChild(modal);
+
+      modal.querySelector('.cerrar-modal')
+        .addEventListener('click', () => modal.remove());
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+
+    } catch (e) {
+      console.error(e);
+      alert('Error cargando el caso');
+    }
+
   }
 }
 

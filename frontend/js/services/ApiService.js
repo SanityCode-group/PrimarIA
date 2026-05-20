@@ -108,6 +108,10 @@ class ApiService {
   async getPerfectosClaridad() {
     return this.fetch('/api/admin/metricas/perfectos/claridad');
   }
+
+  async getCasoDetalle(id) {
+    return this.fetch(`/api/admin/casos/${id}`);
+  }
   
 }
 
