@@ -94,6 +94,35 @@ CREATE TABLE IF NOT EXISTS validaciones (
 	UNIQUE KEY (id_usuario, id_caso_original)
 );
 
+-- Tablas Conversaciones Chatbot
+CREATE TABLE IF NOT EXISTS conversaciones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    titulo VARCHAR(255),
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_conversacion_usuario
+        FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id)
+);
+
+CREATE TABLE IF NOT EXISTS mensajes_conversacion (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_conversacion BIGINT NOT NULL,
+
+    role ENUM('user', 'assistant') NOT NULL,
+    content LONGTEXT NOT NULL,
+
+    orden INT NOT NULL,
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_mensaje_conversacion
+        FOREIGN KEY (id_conversacion)
+        REFERENCES conversaciones(id),
+
+    UNIQUE KEY unique_orden_conversacion (id_conversacion, orden)
+);
+
 
 -- PRUEBAS DE ACCESO
 

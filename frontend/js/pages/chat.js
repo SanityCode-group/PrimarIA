@@ -127,11 +127,11 @@ class ChatPage {
       })) : [];
 
     try {
-      const res = await fetch(`${ENV.API_BASE}/api/chat/message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ history: historial, message: texto })
+      const res = await fetch(`${ENV.API_BASE}/api/chat/${chatId}/message`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ history: historial, message: texto })
       });
 
       if (!res.ok) throw new Error(`Error ${res.status}`);
