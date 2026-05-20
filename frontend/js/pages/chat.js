@@ -111,7 +111,7 @@ class ChatPage {
       })) : [];
 
     try {
-      const res = await fetch(`${ENV.API_BASE}/api/chat/message`, {
+      const res = await fetch(`${ENV.API_BASE}/api/chat/${chatId}/message`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
