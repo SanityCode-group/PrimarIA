@@ -1,5 +1,6 @@
 package es.riberadeltajo.primaria_sanitycode.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import es.riberadeltajo.primaria_sanitycode.model.dto.ChatMessage;
@@ -45,6 +46,7 @@ public class ConversacionService {
         m.setRole(MensajeConversacion.Role.valueOf(role));
         m.setContent(content);
         m.setOrden(orden);
+        m.setFechaCreacion(LocalDateTime.now());
 
         mensajeRepo.save(m);
     }
